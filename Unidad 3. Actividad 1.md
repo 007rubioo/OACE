@@ -98,7 +98,9 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 <img width="457" height="81" alt="imagen" src="https://github.com/user-attachments/assets/b5fa586e-14e0-4cb1-aadb-e1ad98aa54f0" />
 
 
+## Actividad 2
 
+### 1.- Crea un directorio llamado iso en tu unidad c:\. Sitúate en el directorio iso de tu unidad (que será la unidad C). Desde el directorio iso crea los directorios (1_eval, teoria, t1, practica, p1a, p1b)
 
 
 
