@@ -14,5 +14,5 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 
 ### 2.- Sitúate en el directorio p1b. Crea los directorios (3_eval, teoriaa, teoriab) utilizando trayectorias relativas.
 
-```
+
 <img width="729" height="312" alt="imagen" src="https://github.com/user-attachments/assets/a5e8b297-98bd-4474-8d11-6099ed458bd9" />
