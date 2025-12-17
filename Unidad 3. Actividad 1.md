@@ -61,6 +61,48 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 <img width="562" height="708" alt="imagen" src="https://github.com/user-attachments/assets/7e1c8f29-e12f-4c51-b64d-7009d3d80dce" />
 
 
+### 8.- Accede al directorio 2_eval usando trayectoria relativa con una única sentencia.
+
+<img width="197" height="60" alt="imagen" src="https://github.com/user-attachments/assets/3cfc2d6d-81bb-4e5a-84ef-215fec70d60c" />
+
+
+### 9.- Desde aquí cambia el nombre del directorio prac1 por el de prac4.
+
+
+<img width="430" height="309" alt="imagen" src="https://github.com/user-attachments/assets/71e11ded-31e2-441b-8402-e7458e6b62e8" />
+
+
+### 10.- Desde aquí sitúa el directorio prac4 dentro del directorio prac3.
+
+
+<img width="497" height="386" alt="imagen" src="https://github.com/user-attachments/assets/55709359-626a-4616-85b0-b4175596f45c" />
+
+
+
+### 11.- Desde aquí elimina los directorios (1_eval, 3_eval)
+
+
+<img width="457" height="422" alt="imagen" src="https://github.com/user-attachments/assets/151f87c3-f4a9-4e33-961d-a42dff208ce9" />
+
+
+### 12.- Ejecuta la orden para visualizar el árbol de directorios y subdirectorios dependientes del directorio iso 
+
+
+<img width="457" height="140" alt="imagen" src="https://github.com/user-attachments/assets/c66b8eb7-02d0-4c3c-8010-855a848696a5" />
+
+
+
+### 13.- Accede directamente a la raíz (a la unidad en la que te encuentras)
+
+
+<img width="457" height="81" alt="imagen" src="https://github.com/user-attachments/assets/b5fa586e-14e0-4cb1-aadb-e1ad98aa54f0" />
+
+
+
+
+
+
+
 
 
 
