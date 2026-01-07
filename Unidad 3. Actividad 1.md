@@ -100,7 +100,27 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 
 ## Actividad 2
 
-### 1.- Crea un directorio llamado iso en tu unidad c:\. Sitúate en el directorio iso de tu unidad (que será la unidad C). Desde el directorio iso crea los directorios (1_eval, teoria, t1, practica, p1a, p1b)
+### 1.- Sitúate en el directorio iso de la unidad C:. Crea con una única sentencia (p1, in, e1, e2). 
+## Se me borro y ya lo tenia hecho
+
+<img width="445" height="219" alt="imagen" src="https://github.com/user-attachments/assets/b93177ae-e37e-4ce6-9e20-026b88c76927" />
+
+
+
+### 2.- Accede al directorio e2 utilizando trayectoria absoluta. Desde aquí crea los directorios (out, s1, s2, s31,
+
+### s32) utilizando trayectorias relativas y en una única sentencia. 
+## Igual, no le di a guardar pero tengo los dos hechos tal cual paso a paso
+
+
+<img width="445" height="219" alt="imagen" src="https://github.com/user-attachments/assets/023f9ca5-95b9-4fa1-89b1-9a02c7fbd3df" />
+
+
+
+### 3.- Desde el directorio e2 crea los directorios (p3, d y d1) con una única sentencia y trayectorias relativas.
+
+
+
 
 
 
