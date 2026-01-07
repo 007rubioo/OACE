@@ -120,6 +120,16 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 ### 3.- Desde el directorio e2 crea los directorios (p3, d y d1) con una única sentencia y trayectorias relativas.
 
 
+<img width="478" height="390" alt="imagen" src="https://github.com/user-attachments/assets/2d1401d0-992d-43ab-ac58-8f73a530f0d1" />
+
+
+
+### 4.- Accede al directorio s32 utilizando trayectorias relativas. Desde aquí crea los directorios (p2, a, b, c, a1,
+
+### c11 y c12) con una única sentencia.
+
+<img width="1920" height="1080" alt="imagen" src="https://github.com/user-attachments/assets/451aedeb-f7ec-4b71-b76b-34dca5cc6a4a" />
+
 
 
 
