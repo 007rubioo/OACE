@@ -134,6 +134,32 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 
 
 
+### 5.- Situado en s32 visualiza el árbol de directorios dependiente de iso y comprueba que es exactamente igual 
+
+
+<img width="507" height="422" alt="imagen" src="https://github.com/user-attachments/assets/59ceb179-98f3-463c-8c58-6e92de238353" />
+
+
+
+### 6.- Situado en s32 mueve el directorio e1 a p3 utilizando trayectoria relativa.
+
+
+<img width="480" height="542" alt="imagen" src="https://github.com/user-attachments/assets/14c6fbb1-39ce-4bb2-870d-0cb81d44260f" />
+
+
+
+### 7.- Situado en s32 cambia el nombre del directorio e2 por nuevoe2 utilizando trayectoria absoluta.
+
+
+<img width="466" height="456" alt="imagen" src="https://github.com/user-attachments/assets/defb3044-00fc-4839-a294-78616504c341" />
+
+
+### 8.- Situado en s32 elimina los directorios c11 y c12 con una única sentencia.
+
+
+<img width="641" height="383" alt="imagen" src="https://github.com/user-attachments/assets/538ec67d-34d1-46ff-b545-8be6b7948ed1" />
+
+### 9.- Utiliza la sentencia para acceder a la raíz de tu unidad. Una vez allí elimina p1
 
 
 
