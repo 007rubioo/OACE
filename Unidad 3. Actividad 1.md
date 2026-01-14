@@ -162,7 +162,21 @@ cd /-> md iso -> cd iso -> md 1_eval -> cd 1_eval -> md teoria -> cd teoria -> m
 ### 9.- Utiliza la sentencia para acceder a la raíz de tu unidad. Una vez allí elimina p1
 
 
+<img width="642" height="498" alt="imagen" src="https://github.com/user-attachments/assets/764eeea0-b69c-4452-be06-3a02bdded0d0" />
 
+
+
+### 10.- Sitúate en a1. Elimina e1 con una única sentencia. 
+
+
+<img width="439" height="88" alt="imagen" src="https://github.com/user-attachments/assets/92d1279c-122e-4e60-8b20-5ec33bd4796f" />
+
+
+
+### 11.- Ejecuta la orden para visualizar el árbol de directorios dependientes del directorio iso 
+
+
+<img width="480" height="330" alt="imagen" src="https://github.com/user-attachments/assets/029bc374-c2ae-47cd-9acb-fc4258d0a2ce" />
 
 
 
