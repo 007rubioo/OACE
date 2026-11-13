@@ -1,30 +1,29 @@
-# Tienda OACE
+# Ámbar Casa — tienda de un solo producto
 
-Tienda online sencilla hecha con HTML, CSS y JavaScript, sin dependencias.
+Tienda online para vender una **lámpara calientavelas**, hecha con HTML, CSS y JavaScript sin dependencias.
 
-## Funciones
+- Ficha de producto con elección de color y packs con descuento (1, 2 o 3 unidades).
+- Fecha estimada de entrega y cuenta atrás hasta el último día para recibirlo en Navidad.
+- Secciones de venta: beneficios, comparativa, cómo funciona, preguntas frecuentes y llamada final.
+- Barra "Comprar ahora" fija en el móvil.
+- Carrito lateral, **creación de cuenta** e inicio de sesión (contraseñas cifradas con SHA-256 y sal), checkout e historial de pedidos.
 
-- **Catálogo** con búsqueda y filtro por categoría; muestra el stock disponible.
-- **Carrito** lateral: añadir, quitar y cambiar cantidades, con el total calculado.
-- **Crear cuenta**: nombre, correo, contraseña (mín. 8 caracteres, una letra y un número), dirección y aceptación de términos. Comprueba que el correo no esté repetido.
-- **Iniciar y cerrar sesión**. Las contraseñas se guardan cifradas con SHA-256 y una sal aleatoria, nunca en texto plano.
-- **Finalizar compra**: pide iniciar sesión, permite elegir dirección y método de pago, y descuenta el stock.
-- **Mis pedidos**: historial de compras del usuario.
+## Archivos
 
-## Cómo usarla
+| Archivo | Para qué sirve |
+|---|---|
+| `index.html` | Estructura y textos de la página |
+| `styles.css` | Diseño |
+| `productos.js` | **Configuración**: nombre, precio, colores, packs y fecha límite de Navidad |
+| `app.js` | Lógica: carrito, cuentas, pedidos |
+| `GUIA-LANZAMIENTO.md` | Plan paso a paso para empezar a vender |
 
-Abre `index.html` en el navegador, o sírvela en local:
+## Probarla
 
 ```bash
 cd tienda
-python3 -m http.server 8000
-# y abre http://localhost:8000
+python3 -m http.server 8000   # y abre http://localhost:8000
 ```
 
-Para añadir o cambiar productos, edita `productos.js`.
-
-## Limitaciones
-
-Es una demo educativa: usuarios, carrito y pedidos se guardan en el `localStorage`
-del navegador, así que solo existen en ese navegador y no hay pagos reales.
-Para una tienda real hace falta un servidor con base de datos y una pasarela de pago.
+Es una demo: los datos se guardan en el navegador y **no hay cobros reales**.
+Para vender de verdad, sigue el apartado 6 de la guía.

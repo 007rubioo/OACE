@@ -1,17 +1,14 @@
-// Tienda OACE — lógica de la aplicación.
-// Todos los datos (usuarios, sesión, carrito, pedidos, stock) se guardan en
-// localStorage del navegador. Es una demo educativa: en una tienda real las
-// cuentas y los pedidos deben gestionarse en un servidor.
+// Ámbar Casa — lógica de la tienda.
+// Usuarios, sesión, carrito y pedidos se guardan en localStorage del navegador.
+// Es una demo: en una tienda real, cuentas, pedidos y cobros van en un servidor.
 
 const CLAVES = {
-  usuarios: "oace_usuarios",
-  sesion: "oace_sesion",
-  carrito: "oace_carrito",
-  pedidos: "oace_pedidos",
-  stock: "oace_stock",
+  usuarios: "ambar_usuarios",
+  sesion: "ambar_sesion",
+  carrito: "ambar_carrito",
+  pedidos: "ambar_pedidos",
 };
 
-// ---------- Almacenamiento ----------
 function leer(clave, porDefecto) {
   try {
     const v = localStorage.getItem(clave);
@@ -24,166 +21,180 @@ function guardar(clave, valor) {
   try {
     localStorage.setItem(clave, JSON.stringify(valor));
   } catch {
-    /* almacenamiento no disponible: la app sigue funcionando en memoria */
+    /* sin almacenamiento: la tienda sigue funcionando en memoria */
   }
 }
 
-// ---------- Estado ----------
 const estado = {
   usuarios: leer(CLAVES.usuarios, []),
-  sesion: leer(CLAVES.sesion, null), // email del usuario conectado
-  carrito: leer(CLAVES.carrito, []), // [{ id, cantidad }]
+  sesion: leer(CLAVES.sesion, null),
+  carrito: leer(CLAVES.carrito, []), // [{ variante, unidades, cantidad }]
   pedidos: leer(CLAVES.pedidos, []),
-  stock: leer(CLAVES.stock, Object.fromEntries(PRODUCTOS.map((p) => [p.id, p.stock]))),
-  categoria: "Todas",
-  busqueda: "",
+  variante: PRODUCTO.variantes[0].id,
+  unidades: PRODUCTO.packs[1].unidades, // por defecto se preselecciona el pack de 2
 };
 
-const $ = (sel) => document.querySelector(sel);
+const $ = (s) => document.querySelector(s);
 const euros = (n) => n.toLocaleString("es-ES", { style: "currency", currency: "EUR" });
-const producto = (id) => PRODUCTOS.find((p) => p.id === id);
+const variante = (id) => PRODUCTO.variantes.find((v) => v.id === id) || PRODUCTO.variantes[0];
+const pack = (u) => PRODUCTO.packs.find((p) => p.unidades === u) || PRODUCTO.packs[0];
+const precioPack = (u) => Math.round(PRODUCTO.precio * u * (1 - pack(u).descuento) * 100) / 100;
 const usuarioActual = () => estado.usuarios.find((u) => u.email === estado.sesion) || null;
 
-function escapar(texto) {
+function escapar(t) {
   const d = document.createElement("div");
-  d.textContent = String(texto);
+  d.textContent = String(t);
   return d.innerHTML;
 }
-
 function avisar(msg) {
   const el = $("#aviso");
   el.textContent = msg;
   el.classList.add("visible");
   clearTimeout(avisar.t);
-  avisar.t = setTimeout(() => el.classList.remove("visible"), 2500);
+  avisar.t = setTimeout(() => el.classList.remove("visible"), 2600);
 }
 
-// ---------- Contraseñas ----------
-// SHA-256 con sal aleatoria por usuario. Nunca se guarda la contraseña en claro.
+// ---------- Contraseñas (SHA-256 + sal aleatoria) ----------
+const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
 async function hashear(password, sal) {
-  const datos = new TextEncoder().encode(sal + ":" + password);
-  const buffer = await crypto.subtle.digest("SHA-256", datos);
-  return [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(sal + ":" + password)));
 }
 function nuevaSal() {
-  const a = new Uint8Array(16);
-  crypto.getRandomValues(a);
-  return [...a].map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hex(crypto.getRandomValues(new Uint8Array(16)));
 }
 
-// ---------- Navegación ----------
-const VISTAS = ["catalogo", "cuenta", "checkout", "pedidos"];
-function mostrar(vista) {
-  VISTAS.forEach((v) => $("#vista-" + v).classList.toggle("oculto", v !== vista));
-  cerrarCarrito();
-  if (vista === "catalogo") pintarCatalogo();
-  if (vista === "checkout") pintarCheckout();
-  if (vista === "pedidos") pintarPedidos();
-  window.scrollTo(0, 0);
+// ---------- Fechas de entrega ----------
+function sumarDiasLaborables(fecha, dias) {
+  const d = new Date(fecha);
+  while (dias > 0) {
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() !== 0 && d.getDay() !== 6) dias--;
+  }
+  return d;
+}
+const fechaCorta = (d) => d.toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" });
+
+function pintarEntrega() {
+  const hoy = new Date();
+  $("#entrega").innerHTML =
+    `Pídelo hoy y recíbelo entre el <strong>${fechaCorta(sumarDiasLaborables(hoy, 3))}</strong> ` +
+    `y el <strong>${fechaCorta(sumarDiasLaborables(hoy, 6))}</strong>`;
+
+  const limite = new Date(TIENDA.fechaLimiteNavidad);
+  const dias = Math.ceil((limite - hoy) / 86400000);
+  const el = $("#anuncio-navidad");
+  if (dias < 0) el.textContent = "30 días para devolverla";
+  else if (dias === 0) el.textContent = "Último día para recibirlo antes de Navidad";
+  else
+    el.textContent = `Quedan ${dias} días para pedir y recibirlo antes de Navidad`;
 }
 
-// ---------- Catálogo ----------
-function pintarFiltros() {
-  const cats = ["Todas", ...new Set(PRODUCTOS.map((p) => p.categoria))];
-  $("#filtros").innerHTML = cats
+// ---------- Ficha de producto ----------
+function aplicarColor(el, v) {
+  el.style.setProperty("--metal", v.metal);
+  el.style.setProperty("--brillo", v.brillo);
+}
+
+function pintarProducto() {
+  $("#nombre-producto").textContent = PRODUCTO.nombre;
+  $("#subtitulo").textContent = PRODUCTO.subtitulo;
+
+  const v = variante(estado.variante);
+  aplicarColor($("#lampara"), v);
+  $("#color-nombre").textContent = v.nombre;
+  $("#colores").innerHTML = PRODUCTO.variantes
     .map(
-      (c) =>
-        `<button class="filtro ${c === estado.categoria ? "activo" : ""}" data-cat="${escapar(c)}">${escapar(c)}</button>`
+      (x) =>
+        `<button class="color ${x.id === v.id ? "activo" : ""}" data-color="${x.id}" ` +
+        `style="background:${x.metal}" aria-label="${escapar(x.nombre)}" aria-pressed="${x.id === v.id}"></button>`
     )
     .join("");
-}
 
-function pintarCatalogo() {
-  pintarFiltros();
-  const q = estado.busqueda.trim().toLowerCase();
-  const lista = PRODUCTOS.filter(
-    (p) =>
-      (estado.categoria === "Todas" || p.categoria === estado.categoria) &&
-      (!q || p.nombre.toLowerCase().includes(q) || p.categoria.toLowerCase().includes(q))
-  );
-  if (!lista.length) {
-    $("#productos").innerHTML = `<p class="vacio">No hay productos que coincidan.</p>`;
-    return;
-  }
-  $("#productos").innerHTML = lista
+  $("#packs").innerHTML = PRODUCTO.packs
     .map((p) => {
-      const disp = disponible(p.id);
+      const total = precioPack(p.unidades);
+      const sinDto = PRODUCTO.precio * p.unidades;
+      const chip = p.unidades === 2 ? `<span class="chip">MÁS ELEGIDO</span>` : "";
       return `
-      <article class="producto">
-        <div class="img" aria-hidden="true">${p.emoji}</div>
-        <h3>${escapar(p.nombre)}</h3>
-        <span class="cat">${escapar(p.categoria)}</span>
-        <span class="precio">${euros(p.precio)}</span>
-        <span class="stock">${disp > 0 ? `Quedan ${disp}` : "Agotado"}</span>
-        <button class="btn" data-anadir="${p.id}" ${disp > 0 ? "" : "disabled"}>Añadir al carrito</button>
-      </article>`;
+      <button class="pack ${p.unidades === estado.unidades ? "activo" : ""}" data-pack="${p.unidades}">
+        ${chip}
+        <span class="radio"></span>
+        <span><span class="titulo">${escapar(p.etiqueta)}</span>
+          ${p.nota ? `<span class="nota-pack">${escapar(p.nota)}</span>` : ""}</span>
+        <span class="p-precio">${euros(total)}
+          ${p.descuento ? `<small>Ahorras ${euros(sinDto - total)}</small>` : ""}</span>
+      </button>`;
     })
     .join("");
+
+  const total = precioPack(estado.unidades);
+  const p = pack(estado.unidades);
+  $("#precio").textContent = euros(total);
+  $("#barra-precio").textContent = euros(total);
+  $("#ahorro").classList.toggle("oculto", !p.descuento);
+  $("#ahorro").textContent = `−${Math.round(p.descuento * 100)} % por pack`;
+}
+
+// Miniatura del producto con el color de la variante (para el carrito)
+function miniatura(idVariante) {
+  const svg = $("#lampara").cloneNode(true);
+  svg.removeAttribute("id");
+  svg.querySelectorAll(".brillo-anim, .aroma").forEach((n) => n.classList.remove("brillo-anim", "aroma"));
+  aplicarColor(svg, variante(idVariante));
+  return `<span class="mini">${svg.outerHTML}</span>`;
 }
 
 // ---------- Carrito ----------
-function enCarrito(id) {
-  const linea = estado.carrito.find((l) => l.id === id);
-  return linea ? linea.cantidad : 0;
-}
-function disponible(id) {
-  return (estado.stock[id] ?? 0) - enCarrito(id);
-}
 function guardarCarrito() {
   guardar(CLAVES.carrito, estado.carrito);
   pintarCarrito();
-  if (!$("#vista-catalogo").classList.contains("oculto")) pintarCatalogo();
 }
 
-function anadir(id) {
-  if (disponible(id) <= 0) return avisar("No queda más stock de este producto");
-  const linea = estado.carrito.find((l) => l.id === id);
+function anadirAlCarrito() {
+  const linea = estado.carrito.find((l) => l.variante === estado.variante && l.unidades === estado.unidades);
   if (linea) linea.cantidad++;
-  else estado.carrito.push({ id, cantidad: 1 });
+  else estado.carrito.push({ variante: estado.variante, unidades: estado.unidades, cantidad: 1 });
   guardarCarrito();
-  avisar(`«${producto(id).nombre}» añadido al carrito`);
+  abrirCarrito();
 }
 
-function cambiarCantidad(id, delta) {
-  const linea = estado.carrito.find((l) => l.id === id);
+function cambiarCantidad(i, delta) {
+  const linea = estado.carrito[i];
   if (!linea) return;
-  if (delta > 0 && disponible(id) <= 0) return avisar("No queda más stock");
   linea.cantidad += delta;
-  if (linea.cantidad <= 0) estado.carrito = estado.carrito.filter((l) => l.id !== id);
+  if (linea.cantidad <= 0) estado.carrito.splice(i, 1);
   guardarCarrito();
 }
 
-function totalCarrito() {
-  return estado.carrito.reduce((s, l) => s + producto(l.id).precio * l.cantidad, 0);
-}
+const importeLinea = (l) => precioPack(l.unidades) * l.cantidad;
+const totalCarrito = () => estado.carrito.reduce((s, l) => s + importeLinea(l), 0);
+const descripcion = (l) => `${pack(l.unidades).etiqueta} · ${variante(l.variante).nombre}`;
 
 function pintarCarrito() {
-  const unidades = estado.carrito.reduce((s, l) => s + l.cantidad, 0);
-  $("#contador").textContent = unidades;
+  const lamparas = estado.carrito.reduce((s, l) => s + l.unidades * l.cantidad, 0);
+  $("#contador").textContent = lamparas;
   $("#total").textContent = euros(totalCarrito());
-  $("#btn-checkout").disabled = unidades === 0;
-  if (!unidades) {
-    $("#items-carrito").innerHTML = `<li class="vacio">Tu carrito está vacío.</li>`;
-    return;
-  }
-  $("#items-carrito").innerHTML = estado.carrito
-    .map((l) => {
-      const p = producto(l.id);
-      return `
+  $("#btn-checkout").disabled = !estado.carrito.length;
+  $("#items-carrito").innerHTML = estado.carrito.length
+    ? estado.carrito
+        .map(
+          (l, i) => `
       <li class="item">
-        <span class="img" aria-hidden="true">${p.emoji}</span>
-        <div class="info">
-          <p>${escapar(p.nombre)}</p>
-          <p class="sub">${euros(p.precio)} × ${l.cantidad} = ${euros(p.precio * l.cantidad)}</p>
+        ${miniatura(l.variante)}
+        <div>
+          <p>${escapar(PRODUCTO.nombre)}</p>
+          <p class="sub">${escapar(descripcion(l))}</p>
+          <div class="cantidad">
+            <button data-menos="${i}" aria-label="Quitar uno">−</button>
+            <span>${l.cantidad}</span>
+            <button data-mas="${i}" aria-label="Añadir uno">+</button>
+          </div>
         </div>
-        <div class="cantidad">
-          <button data-menos="${p.id}" aria-label="Quitar uno">−</button>
-          <span>${l.cantidad}</span>
-          <button data-mas="${p.id}" aria-label="Añadir uno">+</button>
-        </div>
-      </li>`;
-    })
-    .join("");
+        <span class="importe">${euros(importeLinea(l))}</span>
+      </li>`
+        )
+        .join("")
+    : `<li class="vacio">Tu carrito está vacío.</li>`;
 }
 
 function abrirCarrito() {
@@ -195,6 +206,26 @@ function cerrarCarrito() {
   $("#carrito").classList.remove("abierto");
   $("#carrito").setAttribute("aria-hidden", "true");
   $("#velo").classList.add("oculto");
+}
+
+// ---------- Navegación ----------
+const VISTAS = ["inicio", "cuenta", "checkout", "pedidos"];
+let vistaActual = "inicio";
+function mostrar(vista) {
+  vistaActual = vista;
+  VISTAS.forEach((v) => $("#vista-" + v).classList.toggle("oculto", v !== vista));
+  cerrarCarrito();
+  if (vista === "checkout") pintarCheckout();
+  if (vista === "pedidos") pintarPedidos();
+  actualizarBarraMovil();
+  window.scrollTo(0, 0);
+}
+
+// La barra "Comprar ahora" del móvil aparece cuando el botón principal sale de pantalla
+function actualizarBarraMovil() {
+  const btn = $("#btn-anadir").getBoundingClientRect();
+  const fuera = btn.bottom < 0 || btn.top > window.innerHeight;
+  $("#barra-movil").classList.toggle("visible", vistaActual === "inicio" && fuera);
 }
 
 // ---------- Cuentas ----------
@@ -214,7 +245,6 @@ function cambiarTab(tab) {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 function validarRegistro(d) {
   if (d.nombre.trim().length < 2) return "Introduce tu nombre completo.";
   if (!EMAIL_RE.test(d.email)) return "El correo electrónico no es válido.";
@@ -223,12 +253,11 @@ function validarRegistro(d) {
     return "La contraseña debe tener al menos 8 caracteres, una letra y un número.";
   if (d.password !== d.password2) return "Las contraseñas no coinciden.";
   if (d.direccion.trim().length < 5) return "Introduce una dirección de envío válida.";
-  if (!d.terminos) return "Debes aceptar los términos y condiciones.";
+  if (!d.terminos) return "Debes aceptar los términos y la política de privacidad.";
   return null;
 }
 
-// Tras iniciar sesión o registrarse, si había un checkout pendiente se retoma.
-let destinoTrasLogin = "catalogo";
+let destinoTrasLogin = "inicio";
 
 async function registrar(e) {
   e.preventDefault();
@@ -244,7 +273,6 @@ async function registrar(e) {
   const error = validarRegistro(d);
   f.querySelector("[data-error]").textContent = error || "";
   if (error) return;
-
   const sal = nuevaSal();
   estado.usuarios.push({
     nombre: d.nombre.trim(),
@@ -255,9 +283,9 @@ async function registrar(e) {
     creado: new Date().toISOString(),
   });
   guardar(CLAVES.usuarios, estado.usuarios);
-  iniciarSesion(d.email);
   f.reset();
-  avisar("¡Cuenta creada! Bienvenido/a a Tienda OACE");
+  iniciarSesion(d.email);
+  avisar("¡Cuenta creada! Bienvenido/a");
 }
 
 async function login(e) {
@@ -268,8 +296,8 @@ async function login(e) {
   const ok = u && (await hashear(f.password.value, u.sal)) === u.hash;
   f.querySelector("[data-error]").textContent = ok ? "" : "Correo o contraseña incorrectos.";
   if (!ok) return;
-  iniciarSesion(email);
   f.reset();
+  iniciarSesion(email);
   avisar("Sesión iniciada");
 }
 
@@ -278,14 +306,14 @@ function iniciarSesion(email) {
   guardar(CLAVES.sesion, email);
   pintarCabecera();
   mostrar(destinoTrasLogin);
-  destinoTrasLogin = "catalogo";
+  destinoTrasLogin = "inicio";
 }
 
 function salir() {
   estado.sesion = null;
   guardar(CLAVES.sesion, null);
   pintarCabecera();
-  mostrar("catalogo");
+  mostrar("inicio");
   avisar("Has cerrado sesión");
 }
 
@@ -295,22 +323,20 @@ function irACheckout() {
   if (!usuarioActual()) {
     destinoTrasLogin = "checkout";
     mostrar("cuenta");
-    cambiarTab("login");
-    avisar("Inicia sesión o crea una cuenta para finalizar la compra");
+    cambiarTab("registro");
+    avisar("Crea tu cuenta o inicia sesión para terminar el pedido");
     return;
   }
   mostrar("checkout");
 }
 
 function pintarCheckout() {
-  const lineas = estado.carrito
-    .map((l) => {
-      const p = producto(l.id);
-      return `<div class="linea"><span>${escapar(p.nombre)} × ${l.cantidad}</span><span>${euros(p.precio * l.cantidad)}</span></div>`;
-    })
-    .join("");
   $("#resumen-checkout").innerHTML =
-    lineas + `<div class="linea linea-total"><span>Total</span><span>${euros(totalCarrito())}</span></div>`;
+    estado.carrito
+      .map((l) => `<div class="linea"><span>${escapar(descripcion(l))} × ${l.cantidad}</span><span>${euros(importeLinea(l))}</span></div>`)
+      .join("") +
+    `<div class="linea"><span>Envío</span><span>Gratis</span></div>` +
+    `<div class="linea linea-total"><span>Total (IVA incl.)</span><span>${euros(totalCarrito())}</span></div>`;
   const u = usuarioActual();
   if (u) $("#form-checkout").direccion.value = u.direccion;
 }
@@ -320,78 +346,71 @@ function confirmarPedido(e) {
   const f = e.target;
   const u = usuarioActual();
   if (!u) return irACheckout();
-  if (!estado.carrito.length) return mostrar("catalogo");
+  if (!estado.carrito.length) return mostrar("inicio");
   if (f.direccion.value.trim().length < 5) {
     f.querySelector("[data-error]").textContent = "Introduce una dirección de envío válida.";
     return;
   }
   const pedido = {
-    id: "P" + Date.now().toString(36).toUpperCase(),
+    id: "AC-" + Date.now().toString(36).toUpperCase(),
     email: u.email,
     fecha: new Date().toISOString(),
     direccion: f.direccion.value.trim(),
     pago: f.pago.value,
-    lineas: estado.carrito.map((l) => ({ ...l, precio: producto(l.id).precio, nombre: producto(l.id).nombre })),
+    lineas: estado.carrito.map((l) => ({ texto: descripcion(l), cantidad: l.cantidad, importe: importeLinea(l) })),
     total: totalCarrito(),
   };
-  estado.carrito.forEach((l) => (estado.stock[l.id] -= l.cantidad));
   estado.pedidos.push(pedido);
-  estado.carrito = [];
-  guardar(CLAVES.stock, estado.stock);
   guardar(CLAVES.pedidos, estado.pedidos);
+  estado.carrito = [];
   guardarCarrito();
   f.querySelector("[data-error]").textContent = "";
-  avisar(`Pedido ${pedido.id} confirmado. ¡Gracias por tu compra!`);
+  avisar(`Pedido ${pedido.id} confirmado. ¡Gracias!`);
   mostrar("pedidos");
 }
 
 function pintarPedidos() {
   const u = usuarioActual();
   const mios = estado.pedidos.filter((p) => u && p.email === u.email).reverse();
-  if (!mios.length) {
-    $("#lista-pedidos").innerHTML = `<p class="vacio">Todavía no has hecho ningún pedido.</p>`;
-    return;
-  }
-  $("#lista-pedidos").innerHTML = mios
-    .map(
-      (p) => `
+  $("#lista-pedidos").innerHTML = mios.length
+    ? mios
+        .map(
+          (p) => `
     <article class="pedido">
       <h3>Pedido ${escapar(p.id)}</h3>
       <div class="meta">${new Date(p.fecha).toLocaleString("es-ES")} · ${escapar(p.pago)} · ${escapar(p.direccion)}</div>
-      ${p.lineas
-        .map(
-          (l) =>
-            `<div class="linea"><span>${escapar(l.nombre)} × ${l.cantidad}</span><span>${euros(l.precio * l.cantidad)}</span></div>`
-        )
-        .join("")}
+      ${p.lineas.map((l) => `<div class="linea"><span>${escapar(l.texto)} × ${l.cantidad}</span><span>${euros(l.importe)}</span></div>`).join("")}
       <div class="linea linea-total"><span>Total</span><span>${euros(p.total)}</span></div>
     </article>`
-    )
-    .join("");
+        )
+        .join("")
+    : `<p class="vacio">Todavía no has hecho ningún pedido.</p>`;
 }
 
 // ---------- Eventos ----------
 document.addEventListener("click", (e) => {
   const t = e.target.closest("button, a");
   if (!t) return;
-  if (t.dataset.anadir) anadir(Number(t.dataset.anadir));
-  else if (t.dataset.mas) cambiarCantidad(Number(t.dataset.mas), 1);
-  else if (t.dataset.menos) cambiarCantidad(Number(t.dataset.menos), -1);
-  else if (t.dataset.cat) {
-    estado.categoria = t.dataset.cat;
-    pintarCatalogo();
-  } else if (t.dataset.tab) cambiarTab(t.dataset.tab);
-  else if (t.dataset.view) {
+  const d = t.dataset;
+  if (d.color) {
+    estado.variante = d.color;
+    pintarProducto();
+  } else if (d.pack) {
+    estado.unidades = Number(d.pack);
+    pintarProducto();
+  } else if (d.mas) cambiarCantidad(Number(d.mas), 1);
+  else if (d.menos) cambiarCantidad(Number(d.menos), -1);
+  else if (d.tab) cambiarTab(d.tab);
+  else if ("subir" in d) {
+    if (vistaActual !== "inicio") mostrar("inicio");
+    $(".compra").scrollIntoView({ behavior: "smooth", block: "start" });
+  } else if (d.view) {
     e.preventDefault();
-    mostrar(t.dataset.view);
+    mostrar(d.view);
   }
 });
 
-$("#buscar").addEventListener("input", (e) => {
-  estado.busqueda = e.target.value;
-  if ($("#vista-catalogo").classList.contains("oculto")) mostrar("catalogo");
-  else pintarCatalogo();
-});
+$("#btn-anadir").addEventListener("click", anadirAlCarrito);
 $("#btn-cuenta").addEventListener("click", () => {
   mostrar("cuenta");
   cambiarTab("registro");
@@ -406,8 +425,11 @@ $("#form-registro").addEventListener("submit", registrar);
 $("#form-login").addEventListener("submit", login);
 $("#form-checkout").addEventListener("submit", confirmarPedido);
 document.addEventListener("keydown", (e) => e.key === "Escape" && cerrarCarrito());
+window.addEventListener("scroll", actualizarBarraMovil, { passive: true });
 
 // ---------- Inicio ----------
+pintarProducto();
+pintarEntrega();
 pintarCabecera();
 pintarCarrito();
-mostrar("catalogo");
+mostrar("inicio");

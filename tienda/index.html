@@ -3,59 +3,210 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tienda OACE</title>
+  <title>Ámbar Casa · Lámpara calientavelas</title>
+  <meta name="description" content="Lámpara calientavelas: disfruta del aroma de tus velas sin llama ni humo. Envío gratis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <a href="#" class="logo" data-view="catalogo">Tienda OACE</a>
-    <input id="buscar" type="search" placeholder="Buscar productos…" aria-label="Buscar productos">
-    <nav class="acciones">
+  <div class="anuncio">
+    <span>Envío gratis a toda España</span>
+    <span class="sep">·</span>
+    <span id="anuncio-navidad">Pide antes del 18 de diciembre y llega para Navidad</span>
+  </div>
+
+  <header class="cab">
+    <a href="#" class="marca" data-view="inicio">Ámbar <em>Casa</em></a>
+    <nav class="cab-acciones">
       <span id="saludo" class="saludo"></span>
-      <button id="btn-cuenta" class="btn btn-sec">Iniciar sesión</button>
-      <button id="btn-pedidos" class="btn btn-sec oculto">Mis pedidos</button>
-      <button id="btn-salir" class="btn btn-sec oculto">Salir</button>
-      <button id="btn-carrito" class="btn">Carrito (<span id="contador">0</span>)</button>
+      <button id="btn-cuenta" class="enlace">Mi cuenta</button>
+      <button id="btn-pedidos" class="enlace oculto">Mis pedidos</button>
+      <button id="btn-salir" class="enlace oculto">Salir</button>
+      <button id="btn-carrito" class="btn-carrito" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span id="contador" class="burbuja">0</span>
+      </button>
     </nav>
   </header>
 
   <main>
-    <!-- Catálogo -->
-    <section id="vista-catalogo" class="vista">
-      <div class="filtros" id="filtros"></div>
-      <div class="grid" id="productos"></div>
-    </section>
+    <!-- ===== Página de producto ===== -->
+    <div id="vista-inicio" class="vista">
+      <section class="hero">
+        <div class="galeria">
+          <div class="foto" id="foto">
+            <svg id="lampara" viewBox="0 0 400 460" role="img" aria-label="Lámpara calientavelas encendida sobre una vela">
+              <defs>
+                <radialGradient id="halo" cx="50%" cy="58%" r="55%">
+                  <stop offset="0" stop-color="#ffd59a" stop-opacity=".9"/>
+                  <stop offset=".45" stop-color="#ffb867" stop-opacity=".35"/>
+                  <stop offset="1" stop-color="#ffb867" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="haz" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff1d0" stop-opacity=".95"/>
+                  <stop offset="1" stop-color="#ffcf87" stop-opacity=".15"/>
+                </linearGradient>
+                <linearGradient id="cera" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff6e6"/>
+                  <stop offset="1" stop-color="#f1dcc0"/>
+                </linearGradient>
+                <linearGradient id="vidrio" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#d9c2a5" stop-opacity=".55"/>
+                  <stop offset=".5" stop-color="#fff" stop-opacity=".25"/>
+                  <stop offset="1" stop-color="#c7ab8a" stop-opacity=".55"/>
+                </linearGradient>
+              </defs>
+              <circle cx="200" cy="270" r="190" fill="url(#halo)" class="brillo-anim"/>
+              <!-- poste -->
+              <rect x="292" y="120" width="10" height="300" rx="5" class="metal"/>
+              <!-- brazo -->
+              <path d="M297 124 Q297 96 270 96 L232 96" stroke-width="10" stroke-linecap="round" fill="none" class="metal-trazo"/>
+              <!-- pantalla -->
+              <path d="M150 112 L250 112 L274 176 L126 176 Z" class="metal"/>
+              <path d="M150 112 L250 112 L256 128 L144 128 Z" class="metal-luz" opacity=".55"/>
+              <!-- haz de luz -->
+              <path d="M138 176 L262 176 L250 300 L150 300 Z" fill="url(#haz)" class="brillo-anim"/>
+              <!-- vela -->
+              <rect x="146" y="292" width="108" height="118" rx="14" fill="url(#vidrio)"/>
+              <rect x="152" y="300" width="96" height="104" rx="10" fill="url(#cera)"/>
+              <ellipse cx="200" cy="302" rx="48" ry="8" fill="#ffe9c4"/>
+              <ellipse cx="200" cy="302" rx="30" ry="4.5" fill="#f7cf8f" opacity=".8"/>
+              <rect x="166" y="342" width="68" height="30" rx="4" fill="#efe3d1" opacity=".9"/>
+              <!-- base -->
+              <rect x="120" y="410" width="200" height="16" rx="8" class="metal"/>
+              <!-- aroma -->
+              <g class="aroma" fill="none" stroke="#c9a57a" stroke-width="2" stroke-linecap="round" opacity=".55">
+                <path d="M188 286 q-8 -14 0 -26 q8 -12 0 -24"/>
+                <path d="M212 286 q8 -14 0 -26 q-8 -12 0 -24"/>
+              </g>
+            </svg>
+          </div>
+          <ul class="sellos">
+            <li><strong>Sin llama</strong><span>Seguro con niños y mascotas</span></li>
+            <li><strong>Sin hollín</strong><span>Paredes y techo limpios</span></li>
+            <li><strong>Hasta 3×</strong><span>más duración de la vela</span></li>
+          </ul>
+        </div>
 
-    <!-- Cuenta: registro / login -->
+        <div class="compra">
+          <p class="eyebrow">Novedad · Edición invierno</p>
+          <h1 id="nombre-producto">Lámpara calientavelas Ámbar</h1>
+          <p class="sub" id="subtitulo"></p>
+
+          <div class="precio-fila">
+            <span class="precio" id="precio"></span>
+            <span class="ahorro oculto" id="ahorro"></span>
+          </div>
+          <p class="iva">IVA incluido · Envío gratis</p>
+
+          <fieldset class="opcion">
+            <legend>Color: <strong id="color-nombre"></strong></legend>
+            <div class="colores" id="colores"></div>
+          </fieldset>
+
+          <fieldset class="opcion">
+            <legend>Elige tu pack</legend>
+            <div class="packs" id="packs"></div>
+          </fieldset>
+
+          <button id="btn-anadir" class="btn btn-grande">Añadir al carrito</button>
+          <p class="entrega" id="entrega"></p>
+
+          <ul class="garantias">
+            <li>✓ Pago 100 % seguro</li>
+            <li>✓ 30 días para devolverla</li>
+            <li>✓ 3 años de garantía</li>
+          </ul>
+
+          <details class="acordeon" open>
+            <summary>Qué incluye</summary>
+            <p>Lámpara con atenuador de intensidad, temporizador de 2, 4 u 8 horas, 2 bombillas halógenas G9 de 25 W y cable de 1,5 m. Altura ajustable para velas de 7 a 15 cm.</p>
+          </details>
+          <details class="acordeon">
+            <summary>Cómo funciona</summary>
+            <p>La bombilla calienta la vela desde arriba y la funde de manera uniforme. El aroma se libera sin quemar la mecha, así que no hay humo ni hollín y la vela dura mucho más.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bloque beneficios">
+        <h2>Todo el aroma, nada de llama</h2>
+        <div class="tarjetas">
+          <article><span class="icono">🕯️</span><h3>Tus velas duran más</h3><p>Al no quemar la mecha, la cera no se consume: se funde y perfuma durante muchas más horas.</p></article>
+          <article><span class="icono">🌙</span><h3>Luz cálida regulable</h3><p>Funciona también como lámpara de ambiente. Bájale la intensidad para leer o relajarte.</p></article>
+          <article><span class="icono">⏱️</span><h3>Se apaga sola</h3><p>Temporizador de 2, 4 u 8 horas. Puedes dormirte tranquilo.</p></article>
+          <article><span class="icono">🎁</span><h3>El regalo que sorprende</h3><p>Llega en una caja lista para regalar. Un detalle original que todo el mundo usa.</p></article>
+        </div>
+      </section>
+
+      <section class="bloque comparativa">
+        <h2>Encender una vela vs. Ámbar</h2>
+        <table>
+          <thead><tr><th></th><th>Vela con llama</th><th class="destacado">Lámpara Ámbar</th></tr></thead>
+          <tbody>
+            <tr><td>Llama abierta</td><td>Sí</td><td class="destacado">No</td></tr>
+            <tr><td>Humo y hollín</td><td>Sí</td><td class="destacado">No</td></tr>
+            <tr><td>Duración de la vela</td><td>Normal</td><td class="destacado">Hasta 3 veces más</td></tr>
+            <tr><td>Se apaga sola</td><td>No</td><td class="destacado">Sí, con temporizador</td></tr>
+            <tr><td>Sirve como lámpara</td><td>No</td><td class="destacado">Sí</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bloque pasos">
+        <h2>Así de fácil</h2>
+        <ol>
+          <li><span>1</span><p>Coloca tu vela de tarro favorita bajo la pantalla.</p></li>
+          <li><span>2</span><p>Enciéndela y elige intensidad y temporizador.</p></li>
+          <li><span>3</span><p>En 10–15 minutos la habitación huele de maravilla.</p></li>
+        </ol>
+      </section>
+
+      <section class="bloque faq">
+        <h2>Preguntas frecuentes</h2>
+        <details class="acordeon"><summary>¿Qué velas puedo usar?</summary><p>Cualquier vela en tarro de 7 a 15 cm de alto. La altura de la lámpara se ajusta.</p></details>
+        <details class="acordeon"><summary>¿Cuánto tarda el envío?</summary><p>Entre 3 y 6 días laborables a la península. Recibirás el número de seguimiento por correo.</p></details>
+        <details class="acordeon"><summary>¿Y si no me gusta?</summary><p>Tienes 30 días para devolverla y te reembolsamos el importe completo.</p></details>
+        <details class="acordeon"><summary>¿Consume mucha electricidad?</summary><p>La bombilla es de 25 W: unas 8 horas encendida cuestan unos pocos céntimos.</p></details>
+      </section>
+
+      <section class="cta-final">
+        <h2>Haz que tu casa huela a hogar</h2>
+        <p>Envío gratis y 30 días para probarla sin compromiso.</p>
+        <button class="btn btn-grande" data-subir>Quiero la mía</button>
+      </section>
+    </div>
+
+    <!-- ===== Cuenta ===== -->
     <section id="vista-cuenta" class="vista oculto">
       <div class="tarjeta-form">
         <div class="tabs">
           <button class="tab activa" data-tab="login">Iniciar sesión</button>
           <button class="tab" data-tab="registro">Crear cuenta</button>
         </div>
-
         <form id="form-login" class="form" novalidate>
           <label>Correo electrónico <input name="email" type="email" required autocomplete="email"></label>
           <label>Contraseña <input name="password" type="password" required autocomplete="current-password"></label>
           <p class="error" data-error></p>
-          <button class="btn btn-ancho" type="submit">Entrar</button>
+          <button class="btn" type="submit">Entrar</button>
         </form>
-
         <form id="form-registro" class="form oculto" novalidate>
           <label>Nombre completo <input name="nombre" required autocomplete="name"></label>
           <label>Correo electrónico <input name="email" type="email" required autocomplete="email"></label>
-          <label>Contraseña <small>(mín. 8 caracteres, una letra y un número)</small>
+          <label>Contraseña <small>mín. 8 caracteres, una letra y un número</small>
             <input name="password" type="password" required autocomplete="new-password"></label>
           <label>Repetir contraseña <input name="password2" type="password" required autocomplete="new-password"></label>
           <label>Dirección de envío <input name="direccion" required autocomplete="street-address"></label>
-          <label class="check"><input name="terminos" type="checkbox"> Acepto los términos y condiciones</label>
+          <label class="check"><input name="terminos" type="checkbox"> Acepto los términos y la política de privacidad</label>
           <p class="error" data-error></p>
-          <button class="btn btn-ancho" type="submit">Crear cuenta</button>
+          <button class="btn" type="submit">Crear cuenta</button>
         </form>
       </div>
     </section>
 
-    <!-- Checkout -->
+    <!-- ===== Checkout ===== -->
     <section id="vista-checkout" class="vista oculto">
       <div class="tarjeta-form">
         <h2>Finalizar compra</h2>
@@ -64,38 +215,53 @@
           <label>Dirección de envío <input name="direccion" required></label>
           <label>Método de pago
             <select name="pago">
-              <option value="tarjeta">Tarjeta</option>
-              <option value="transferencia">Transferencia bancaria</option>
-              <option value="contrareembolso">Contrareembolso</option>
+              <option value="Tarjeta">Tarjeta</option>
+              <option value="Bizum">Bizum</option>
+              <option value="PayPal">PayPal</option>
             </select>
           </label>
           <p class="error" data-error></p>
-          <button class="btn btn-ancho" type="submit">Confirmar pedido</button>
+          <button class="btn" type="submit">Confirmar pedido</button>
+          <p class="nota">Demo: no se realiza ningún cobro real.</p>
         </form>
       </div>
     </section>
 
-    <!-- Pedidos -->
+    <!-- ===== Pedidos ===== -->
     <section id="vista-pedidos" class="vista oculto">
-      <h2>Mis pedidos</h2>
-      <div id="lista-pedidos"></div>
+      <div class="contenedor-estrecho">
+        <h2>Mis pedidos</h2>
+        <div id="lista-pedidos"></div>
+      </div>
     </section>
   </main>
 
-  <!-- Carrito lateral -->
+  <footer class="pie">
+    <p class="marca">Ámbar <em>Casa</em></p>
+    <p>Envíos · Devoluciones · Aviso legal · Privacidad · Contacto</p>
+  </footer>
+
+  <!-- Barra fija en móvil -->
+  <div class="barra-movil" id="barra-movil">
+    <span id="barra-precio"></span>
+    <button class="btn" data-subir>Comprar ahora</button>
+  </div>
+
+  <!-- Carrito -->
   <aside id="carrito" class="carrito" aria-hidden="true">
     <div class="carrito-cab">
       <h2>Tu carrito</h2>
       <button id="cerrar-carrito" class="btn-icono" aria-label="Cerrar">×</button>
     </div>
+    <div class="envio-gratis">🚚 Tienes <strong>envío gratis</strong></div>
     <ul id="items-carrito" class="items"></ul>
     <div class="carrito-pie">
-      <p class="total">Total: <strong id="total">0,00 €</strong></p>
-      <button id="btn-checkout" class="btn btn-ancho">Tramitar pedido</button>
+      <p class="total"><span>Total</span><strong id="total">0,00 €</strong></p>
+      <button id="btn-checkout" class="btn">Tramitar pedido</button>
+      <p class="nota">Pago seguro · 30 días de devolución</p>
     </div>
   </aside>
   <div id="velo" class="velo oculto"></div>
-
   <div id="aviso" class="aviso" role="status"></div>
 
   <script src="productos.js"></script>
