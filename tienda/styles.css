@@ -1,0 +1,154 @@
+:root {
+  --fondo: #f6f7f9;
+  --superficie: #ffffff;
+  --texto: #1d2330;
+  --suave: #667085;
+  --borde: #e3e6eb;
+  --primario: #2563eb;
+  --primario-osc: #1d4ed8;
+  --error: #c62828;
+  --ok: #2e7d32;
+  --radio: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #12151b;
+    --superficie: #1b2029;
+    --texto: #e8ebf0;
+    --suave: #9aa3b2;
+    --borde: #2c3340;
+    --primario: #4f8cff;
+    --primario-osc: #3b78ee;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+.oculto { display: none !important; }
+
+/* Cabecera */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  padding: 12px 16px;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+}
+.logo { font-weight: 700; font-size: 1.2rem; color: var(--texto); text-decoration: none; }
+#buscar {
+  flex: 1 1 200px; min-width: 0;
+  padding: 8px 12px; border: 1px solid var(--borde); border-radius: var(--radio);
+  background: var(--fondo); color: var(--texto);
+}
+.acciones { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.saludo { color: var(--suave); font-size: .9rem; }
+
+/* Botones */
+.btn {
+  padding: 8px 14px; border: none; border-radius: var(--radio);
+  background: var(--primario); color: #fff; font: inherit; cursor: pointer;
+}
+.btn:hover { background: var(--primario-osc); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-sec { background: transparent; color: var(--texto); border: 1px solid var(--borde); }
+.btn-sec:hover { background: var(--fondo); }
+.btn-ancho { width: 100%; }
+.btn-icono { background: none; border: none; font-size: 1.6rem; color: var(--texto); cursor: pointer; }
+
+main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* Catálogo */
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.filtro {
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--borde);
+  background: var(--superficie); color: var(--texto); cursor: pointer; font: inherit;
+}
+.filtro.activo { background: var(--primario); color: #fff; border-color: var(--primario); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.producto {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 16px; background: var(--superficie);
+  border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.producto .img { font-size: 3.5rem; text-align: center; padding: 12px 0; }
+.producto h3 { margin: 0; font-size: 1rem; }
+.producto .cat { color: var(--suave); font-size: .85rem; }
+.producto .precio { font-weight: 700; font-size: 1.1rem; }
+.producto .stock { color: var(--suave); font-size: .8rem; }
+.producto .btn { margin-top: auto; }
+.vacio { color: var(--suave); text-align: center; padding: 40px 0; }
+
+/* Formularios */
+.tarjeta-form {
+  max-width: 440px; margin: 0 auto; padding: 24px;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.tarjeta-form h2 { margin-top: 0; }
+.tabs { display: flex; margin-bottom: 16px; border-bottom: 1px solid var(--borde); }
+.tab {
+  flex: 1; padding: 10px; background: none; border: none; font: inherit;
+  color: var(--suave); cursor: pointer; border-bottom: 2px solid transparent;
+}
+.tab.activa { color: var(--primario); border-bottom-color: var(--primario); font-weight: 600; }
+.form { display: flex; flex-direction: column; gap: 12px; }
+.form label { display: flex; flex-direction: column; gap: 4px; font-size: .9rem; }
+.form label small { color: var(--suave); }
+.form input, .form select {
+  padding: 9px 12px; border: 1px solid var(--borde); border-radius: 8px;
+  background: var(--fondo); color: var(--texto); font: inherit;
+}
+.form input:focus, .form select:focus { outline: 2px solid var(--primario); outline-offset: 1px; }
+.form .check { flex-direction: row; align-items: center; gap: 8px; }
+.error { color: var(--error); min-height: 1.2em; margin: 0; font-size: .9rem; }
+
+/* Carrito */
+.carrito {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 30;
+  width: min(380px, 100%);
+  display: flex; flex-direction: column;
+  background: var(--superficie); border-left: 1px solid var(--borde);
+  transform: translateX(100%); transition: transform .25s ease;
+}
+.carrito.abierto { transform: translateX(0); }
+.carrito-cab, .carrito-pie { padding: 16px; border-bottom: 1px solid var(--borde); }
+.carrito-cab { display: flex; justify-content: space-between; align-items: center; }
+.carrito-cab h2 { margin: 0; font-size: 1.2rem; }
+.carrito-pie { border-bottom: none; border-top: 1px solid var(--borde); }
+.items { list-style: none; margin: 0; padding: 0 16px; overflow-y: auto; flex: 1; }
+.item { display: flex; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--borde); }
+.item .img { font-size: 1.8rem; }
+.item .info { flex: 1; min-width: 0; }
+.item .info p { margin: 0; }
+.item .info .sub { color: var(--suave); font-size: .85rem; }
+.cantidad { display: flex; align-items: center; gap: 6px; }
+.cantidad button {
+  width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--borde);
+  background: var(--fondo); color: var(--texto); cursor: pointer;
+}
+.total { font-size: 1.1rem; margin: 0 0 12px; }
+.velo { position: fixed; inset: 0; z-index: 20; background: rgba(0,0,0,.4); }
+
+/* Checkout y pedidos */
+.linea { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; }
+.linea-total { border-top: 1px solid var(--borde); margin: 8px 0 16px; padding-top: 8px; font-weight: 700; }
+.pedido {
+  padding: 16px; margin-bottom: 12px;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.pedido h3 { margin: 0 0 4px; font-size: 1rem; }
+.pedido .meta { color: var(--suave); font-size: .85rem; margin-bottom: 8px; }
+
+/* Aviso */
+.aviso {
+  position: fixed; left: 50%; bottom: 20px; z-index: 40;
+  transform: translate(-50%, 150%);
+  padding: 10px 18px; border-radius: var(--radio);
+  background: var(--texto); color: var(--superficie);
+  transition: transform .25s ease; max-width: calc(100% - 32px);
+}
+.aviso.visible { transform: translate(-50%, 0); }

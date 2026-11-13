@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tienda OACE</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#" class="logo" data-view="catalogo">Tienda OACE</a>
+    <input id="buscar" type="search" placeholder="Buscar productos…" aria-label="Buscar productos">
+    <nav class="acciones">
+      <span id="saludo" class="saludo"></span>
+      <button id="btn-cuenta" class="btn btn-sec">Iniciar sesión</button>
+      <button id="btn-pedidos" class="btn btn-sec oculto">Mis pedidos</button>
+      <button id="btn-salir" class="btn btn-sec oculto">Salir</button>
+      <button id="btn-carrito" class="btn">Carrito (<span id="contador">0</span>)</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Catálogo -->
+    <section id="vista-catalogo" class="vista">
+      <div class="filtros" id="filtros"></div>
+      <div class="grid" id="productos"></div>
+    </section>
+
+    <!-- Cuenta: registro / login -->
+    <section id="vista-cuenta" class="vista oculto">
+      <div class="tarjeta-form">
+        <div class="tabs">
+          <button class="tab activa" data-tab="login">Iniciar sesión</button>
+          <button class="tab" data-tab="registro">Crear cuenta</button>
+        </div>
+
+        <form id="form-login" class="form" novalidate>
+          <label>Correo electrónico <input name="email" type="email" required autocomplete="email"></label>
+          <label>Contraseña <input name="password" type="password" required autocomplete="current-password"></label>
+          <p class="error" data-error></p>
+          <button class="btn btn-ancho" type="submit">Entrar</button>
+        </form>
+
+        <form id="form-registro" class="form oculto" novalidate>
+          <label>Nombre completo <input name="nombre" required autocomplete="name"></label>
+          <label>Correo electrónico <input name="email" type="email" required autocomplete="email"></label>
+          <label>Contraseña <small>(mín. 8 caracteres, una letra y un número)</small>
+            <input name="password" type="password" required autocomplete="new-password"></label>
+          <label>Repetir contraseña <input name="password2" type="password" required autocomplete="new-password"></label>
+          <label>Dirección de envío <input name="direccion" required autocomplete="street-address"></label>
+          <label class="check"><input name="terminos" type="checkbox"> Acepto los términos y condiciones</label>
+          <p class="error" data-error></p>
+          <button class="btn btn-ancho" type="submit">Crear cuenta</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Checkout -->
+    <section id="vista-checkout" class="vista oculto">
+      <div class="tarjeta-form">
+        <h2>Finalizar compra</h2>
+        <div id="resumen-checkout"></div>
+        <form id="form-checkout" class="form" novalidate>
+          <label>Dirección de envío <input name="direccion" required></label>
+          <label>Método de pago
+            <select name="pago">
+              <option value="tarjeta">Tarjeta</option>
+              <option value="transferencia">Transferencia bancaria</option>
+              <option value="contrareembolso">Contrareembolso</option>
+            </select>
+          </label>
+          <p class="error" data-error></p>
+          <button class="btn btn-ancho" type="submit">Confirmar pedido</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Pedidos -->
+    <section id="vista-pedidos" class="vista oculto">
+      <h2>Mis pedidos</h2>
+      <div id="lista-pedidos"></div>
+    </section>
+  </main>
+
+  <!-- Carrito lateral -->
+  <aside id="carrito" class="carrito" aria-hidden="true">
+    <div class="carrito-cab">
+      <h2>Tu carrito</h2>
+      <button id="cerrar-carrito" class="btn-icono" aria-label="Cerrar">×</button>
+    </div>
+    <ul id="items-carrito" class="items"></ul>
+    <div class="carrito-pie">
+      <p class="total">Total: <strong id="total">0,00 €</strong></p>
+      <button id="btn-checkout" class="btn btn-ancho">Tramitar pedido</button>
+    </div>
+  </aside>
+  <div id="velo" class="velo oculto"></div>
+
+  <div id="aviso" class="aviso" role="status"></div>
+
+  <script src="productos.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
