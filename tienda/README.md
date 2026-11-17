@@ -1,6 +1,6 @@
-# Ámbar Casa — tienda de un solo producto
+# Sedalia — tienda de un solo producto
 
-Tienda online para vender una **lámpara calientavelas**, hecha con HTML, CSS y JavaScript sin dependencias.
+Tienda online para vender un **rizador sin calor**, hecha con HTML, CSS y JavaScript sin dependencias.
 
 - Ficha de producto con elección de color y packs con descuento (1, 2 o 3 unidades).
 - Fecha estimada de entrega y cuenta atrás hasta el último día para recibirlo en Navidad.
@@ -19,8 +19,7 @@ Tienda online para vender una **lámpara calientavelas**, hecha con HTML, CSS y 
 | `medicion.js` | Píxel de Meta y aviso de cookies |
 | `gracias.html` | Página tras el pago (registra la compra en el píxel) |
 | `legal.html` | Aviso legal, condiciones, envíos y devoluciones, privacidad y cookies |
-| `PASOS-PARA-VENDER.md` | **Empieza aquí**: proveedor, Stripe, píxel, fotos y datos legales |
-| `GUIA-LANZAMIENTO.md` | Estrategia: validación, números y calendario |
+| `PASOS-PARA-VENDER.md` | **Empieza aquí**: proveedor, Stripe, píxel, fotos, datos legales, números y anuncios |
 
 ## Probarla
 

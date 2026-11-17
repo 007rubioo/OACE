@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ámbar Casa · Lámpara calientavelas</title>
-  <meta name="description" content="Lámpara calientavelas: disfruta del aroma de tus velas sin llama ni humo. Envío gratis.">
+  <title>Sedalia · Rizador sin calor</title>
+  <meta name="description" content="Rizador sin calor de satén: rizos y ondas mientras duermes, sin plancha y sin dañar tu pelo. Envío gratis.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
   </div>
 
   <header class="cab">
-    <a href="#" class="marca" data-view="inicio">Ámbar <em>Casa</em></a>
+    <a href="#" class="marca" data-view="inicio">Seda<em>lia</em></a>
     <nav class="cab-acciones">
       <span id="saludo" class="saludo"></span>
       <button id="btn-cuenta" class="enlace">Mi cuenta</button>
@@ -37,62 +37,54 @@
       <section class="hero">
         <div class="galeria">
           <div class="foto" id="foto">
-            <svg id="lampara" viewBox="0 0 400 460" role="img" aria-label="Lámpara calientavelas encendida sobre una vela">
+            <svg id="ilustracion" viewBox="0 0 400 420" role="img" aria-label="Rizador sin calor de satén con dos coleteros">
               <defs>
-                <radialGradient id="halo" cx="50%" cy="58%" r="55%">
-                  <stop offset="0" stop-color="#ffd59a" stop-opacity=".9"/>
-                  <stop offset=".45" stop-color="#ffb867" stop-opacity=".35"/>
-                  <stop offset="1" stop-color="#ffb867" stop-opacity="0"/>
+                <radialGradient id="halo" cx="50%" cy="45%" r="60%">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+                  <stop offset="1" stop-color="#fff" stop-opacity="0"/>
                 </radialGradient>
-                <linearGradient id="haz" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#fff1d0" stop-opacity=".95"/>
-                  <stop offset="1" stop-color="#ffcf87" stop-opacity=".15"/>
-                </linearGradient>
-                <linearGradient id="cera" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#fff6e6"/>
-                  <stop offset="1" stop-color="#f1dcc0"/>
-                </linearGradient>
-                <linearGradient id="vidrio" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stop-color="#d9c2a5" stop-opacity=".55"/>
-                  <stop offset=".5" stop-color="#fff" stop-opacity=".25"/>
-                  <stop offset="1" stop-color="#c7ab8a" stop-opacity=".55"/>
-                </linearGradient>
               </defs>
-              <circle cx="200" cy="270" r="190" fill="url(#halo)" class="brillo-anim"/>
-              <!-- poste -->
-              <rect x="292" y="120" width="10" height="300" rx="5" class="metal"/>
-              <!-- brazo -->
-              <path d="M297 124 Q297 96 270 96 L232 96" stroke-width="10" stroke-linecap="round" fill="none" class="metal-trazo"/>
-              <!-- pantalla -->
-              <path d="M150 112 L250 112 L274 176 L126 176 Z" class="metal"/>
-              <path d="M150 112 L250 112 L256 128 L144 128 Z" class="metal-luz" opacity=".55"/>
-              <!-- haz de luz -->
-              <path d="M138 176 L262 176 L250 300 L150 300 Z" fill="url(#haz)" class="brillo-anim"/>
-              <!-- vela -->
-              <rect x="146" y="292" width="108" height="118" rx="14" fill="url(#vidrio)"/>
-              <rect x="152" y="300" width="96" height="104" rx="10" fill="url(#cera)"/>
-              <ellipse cx="200" cy="302" rx="48" ry="8" fill="#ffe9c4"/>
-              <ellipse cx="200" cy="302" rx="30" ry="4.5" fill="#f7cf8f" opacity=".8"/>
-              <rect x="166" y="342" width="68" height="30" rx="4" fill="#efe3d1" opacity=".9"/>
-              <!-- base -->
-              <rect x="120" y="410" width="200" height="16" rx="8" class="metal"/>
-              <!-- aroma -->
-              <g class="aroma" fill="none" stroke="#c9a57a" stroke-width="2" stroke-linecap="round" opacity=".55">
-                <path d="M188 286 q-8 -14 0 -26 q8 -12 0 -24"/>
-                <path d="M212 286 q8 -14 0 -26 q-8 -12 0 -24"/>
+              <circle cx="200" cy="200" r="185" fill="url(#halo)"/>
+              <!-- mechones con ondas -->
+              <g fill="none" stroke-linecap="round" class="pelo">
+                <path d="M150 250 q-22 22 0 44 q22 22 0 44 q-22 22 0 40" stroke-width="13"/>
+                <path d="M118 245 q-20 22 0 44 q20 22 0 44 q-20 20 -4 36" stroke-width="11" opacity=".8"/>
+                <path d="M250 250 q22 22 0 44 q-22 22 0 44 q22 22 0 40" stroke-width="13"/>
+                <path d="M282 245 q20 22 0 44 q-20 22 0 44 q20 20 4 36" stroke-width="11" opacity=".8"/>
+              </g>
+              <!-- barra de satén -->
+              <path d="M96 285 C 96 70, 304 70, 304 285" stroke-width="54" stroke-linecap="round" fill="none" class="tono-trazo"/>
+              <path d="M96 285 C 96 70, 304 70, 304 285" stroke-width="54" stroke-linecap="round" fill="none" class="sombra-trazo" opacity=".35" stroke-dasharray="2 22"/>
+              <path d="M84 270 C 86 92, 296 76, 300 210" stroke-width="12" stroke-linecap="round" fill="none" class="brillo-trazo" opacity=".85"/>
+              <!-- coleteros -->
+              <g transform="translate(96 300)">
+                <circle r="38" class="sombra-relleno"/>
+                <circle r="38" fill="none" stroke-width="16" stroke-dasharray="9 7" class="tono-trazo"/>
+                <circle r="14" class="fondo-relleno"/>
+              </g>
+              <g transform="translate(304 300)">
+                <circle r="38" class="sombra-relleno"/>
+                <circle r="38" fill="none" stroke-width="16" stroke-dasharray="9 7" class="tono-trazo"/>
+                <circle r="14" class="fondo-relleno"/>
+              </g>
+              <!-- destellos -->
+              <g class="anim destellos" fill="#ffffff">
+                <path d="M200 40 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5 l14 -5 Z"/>
+                <path d="M330 110 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z"/>
+                <path d="M70 130 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z"/>
               </g>
             </svg>
           </div>
           <ul class="sellos">
-            <li><strong>Sin llama</strong><span>Seguro con niños y mascotas</span></li>
-            <li><strong>Sin hollín</strong><span>Paredes y techo limpios</span></li>
-            <li><strong>Hasta 3×</strong><span>más duración de la vela</span></li>
+            <li><strong>0 °C</strong><span>Nada de calor ni daño</span></li>
+            <li><strong>2 min</strong><span>Para colocártelo</span></li>
+            <li><strong>Toda la noche</strong><span>Rizos al despertar</span></li>
           </ul>
         </div>
 
         <div class="compra">
-          <p class="eyebrow">Novedad · Edición invierno</p>
-          <h1 id="nombre-producto">Lámpara calientavelas Ámbar</h1>
+          <p class="eyebrow">El regalo viral de este invierno</p>
+          <h1 id="nombre-producto">Rizador sin calor Sedalia</h1>
           <p class="sub" id="subtitulo"></p>
 
           <div class="precio-fila">
@@ -117,41 +109,41 @@
 
           <ul class="garantias">
             <li>✓ Pago 100 % seguro</li>
-            <li>✓ 30 días para devolverla</li>
-            <li>✓ 3 años de garantía</li>
+            <li>✓ 30 días para devolverlo</li>
+            <li>✓ Envío en bolsa de regalo</li>
           </ul>
 
           <details class="acordeon" open>
             <summary>Qué incluye</summary>
-            <p>Lámpara con atenuador de intensidad, temporizador de 2, 4 u 8 horas, 2 bombillas halógenas G9 de 25 W y cable de 1,5 m. Altura ajustable para velas de 7 a 15 cm.</p>
+            <p id="incluye"></p>
           </details>
           <details class="acordeon">
             <summary>Cómo funciona</summary>
-            <p>La bombilla calienta la vela desde arriba y la funde de manera uniforme. El aroma se libera sin quemar la mecha, así que no hay humo ni hollín y la vela dura mucho más.</p>
+            <p>Enrollas mechones de pelo alrededor de la barra de satén y los sujetas con los coleteros. Mientras duermes, el pelo toma la forma de la barra. Por la mañana lo sueltas y tienes ondas definidas, sin haber usado nada de calor.</p>
           </details>
         </div>
       </section>
 
       <section class="bloque beneficios">
-        <h2>Todo el aroma, nada de llama</h2>
+        <h2>Pelo de peluquería, sin quemarlo</h2>
         <div class="tarjetas">
-          <article><span class="icono">🕯️</span><h3>Tus velas duran más</h3><p>Al no quemar la mecha, la cera no se consume: se funde y perfuma durante muchas más horas.</p></article>
-          <article><span class="icono">🌙</span><h3>Luz cálida regulable</h3><p>Funciona también como lámpara de ambiente. Bájale la intensidad para leer o relajarte.</p></article>
-          <article><span class="icono">⏱️</span><h3>Se apaga sola</h3><p>Temporizador de 2, 4 u 8 horas. Puedes dormirte tranquilo.</p></article>
-          <article><span class="icono">🎁</span><h3>El regalo que sorprende</h3><p>Llega en una caja lista para regalar. Un detalle original que todo el mundo usa.</p></article>
+          <article><span class="icono">💆‍♀️</span><h3>Pelo más sano</h3><p>Sin plancha ni tenacillas: tu pelo no se quema, no se abre y se encrespa menos.</p></article>
+          <article><span class="icono">⏰</span><h3>Mañanas sin prisas</h3><p>Te lo pones por la noche en 2 minutos y te levantas peinada. Cero minutos de plancha.</p></article>
+          <article><span class="icono">🌙</span><h3>Cómodo para dormir</h3><p>Relleno suave y satén que no tira del pelo ni deja marcas.</p></article>
+          <article><span class="icono">🎁</span><h3>El regalo que triunfa</h3><p>Llega en bolsa de regalo. Un detalle útil que se usa todas las semanas.</p></article>
         </div>
       </section>
 
       <section class="bloque comparativa">
-        <h2>Encender una vela vs. Ámbar</h2>
+        <h2>Plancha o tenacillas vs. Sedalia</h2>
         <table>
-          <thead><tr><th></th><th>Vela con llama</th><th class="destacado">Lámpara Ámbar</th></tr></thead>
+          <thead><tr><th></th><th>Con calor</th><th class="destacado">Sedalia</th></tr></thead>
           <tbody>
-            <tr><td>Llama abierta</td><td>Sí</td><td class="destacado">No</td></tr>
-            <tr><td>Humo y hollín</td><td>Sí</td><td class="destacado">No</td></tr>
-            <tr><td>Duración de la vela</td><td>Normal</td><td class="destacado">Hasta 3 veces más</td></tr>
-            <tr><td>Se apaga sola</td><td>No</td><td class="destacado">Sí, con temporizador</td></tr>
-            <tr><td>Sirve como lámpara</td><td>No</td><td class="destacado">Sí</td></tr>
+            <tr><td>Daña el pelo</td><td>Sí</td><td class="destacado">No</td></tr>
+            <tr><td>Tiempo por la mañana</td><td>15–30 min</td><td class="destacado">0 min</td></tr>
+            <tr><td>Se puede usar a diario</td><td>Mejor no</td><td class="destacado">Sí</td></tr>
+            <tr><td>Funciona mientras duermes</td><td>No</td><td class="destacado">Sí</td></tr>
+            <tr><td>Precio</td><td>30–80 €</td><td class="destacado" id="precio-comparativa"></td></tr>
           </tbody>
         </table>
       </section>
@@ -159,24 +151,25 @@
       <section class="bloque pasos">
         <h2>Así de fácil</h2>
         <ol>
-          <li><span>1</span><p>Coloca tu vela de tarro favorita bajo la pantalla.</p></li>
-          <li><span>2</span><p>Enciéndela y elige intensidad y temporizador.</p></li>
-          <li><span>3</span><p>En 10–15 minutos la habitación huele de maravilla.</p></li>
+          <li><span>1</span><p>Con el pelo seco o un poco húmedo, coloca la barra sobre la cabeza.</p></li>
+          <li><span>2</span><p>Enrolla los mechones alrededor y sujeta las puntas con los coleteros.</p></li>
+          <li><span>3</span><p>Duerme tranquila. Por la mañana suéltalo: ondas listas.</p></li>
         </ol>
       </section>
 
       <section class="bloque faq">
         <h2>Preguntas frecuentes</h2>
-        <details class="acordeon"><summary>¿Qué velas puedo usar?</summary><p>Cualquier vela en tarro de 7 a 15 cm de alto. La altura de la lámpara se ajusta.</p></details>
+        <details class="acordeon"><summary>¿Funciona con mi tipo de pelo?</summary><p>Funciona mejor con melena media o larga, a partir de los hombros. Sirve para pelo liso, ondulado y grueso.</p></details>
+        <details class="acordeon"><summary>¿Cuánto duran los rizos?</summary><p>Normalmente todo el día. Con un poco de espuma o laca al soltarlo duran más.</p></details>
+        <details class="acordeon"><summary>¿Lo pongo con el pelo mojado?</summary><p>Mejor seco o ligeramente húmedo. Si está empapado no se secará en toda la noche.</p></details>
         <details class="acordeon"><summary>¿Cuánto tarda el envío?</summary><p>Entre 3 y 6 días laborables a la península. Recibirás el número de seguimiento por correo.</p></details>
-        <details class="acordeon"><summary>¿Y si no me gusta?</summary><p>Tienes 30 días para devolverla y te reembolsamos el importe completo.</p></details>
-        <details class="acordeon"><summary>¿Consume mucha electricidad?</summary><p>La bombilla es de 25 W: unas 8 horas encendida cuestan unos pocos céntimos.</p></details>
+        <details class="acordeon"><summary>¿Y si no me convence?</summary><p>Tienes 30 días para devolverlo y te reembolsamos el importe completo.</p></details>
       </section>
 
       <section class="cta-final">
-        <h2>Haz que tu casa huela a hogar</h2>
-        <p>Envío gratis y 30 días para probarla sin compromiso.</p>
-        <button class="btn btn-grande" data-subir>Quiero la mía</button>
+        <h2>Despierta con el pelo hecho</h2>
+        <p>Envío gratis y 30 días para probarlo sin compromiso.</p>
+        <button class="btn btn-grande" data-subir>Quiero el mío</button>
       </section>
     </div>
 
@@ -238,7 +231,7 @@
   </main>
 
   <footer class="pie">
-    <p class="marca">Ámbar <em>Casa</em></p>
+    <p class="marca">Seda<em>lia</em></p>
     <p class="pie-enlaces">
       <a href="legal.html#envios">Envíos y devoluciones</a>
       <a href="legal.html#condiciones">Condiciones de venta</a>

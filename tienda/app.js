@@ -1,4 +1,4 @@
-// Ámbar Casa — lógica de la tienda.
+// Lógica de la tienda (un solo producto).
 // Usuarios, sesión, carrito y pedidos se guardan en localStorage del navegador.
 // Es una demo: en una tienda real, cuentas, pedidos y cobros van en un servidor.
 
@@ -38,7 +38,8 @@ const $ = (s) => document.querySelector(s);
 const euros = (n) => n.toLocaleString("es-ES", { style: "currency", currency: "EUR" });
 const variante = (id) => PRODUCTO.variantes.find((v) => v.id === id) || PRODUCTO.variantes[0];
 const pack = (u) => PRODUCTO.packs.find((p) => p.unidades === u) || PRODUCTO.packs[0];
-const precioPack = (u) => Math.round(PRODUCTO.precio * u * (1 - pack(u).descuento) * 100) / 100;
+const precioPack = (u) => pack(u).precio ?? Math.round(PRODUCTO.precio * u * 100) / 100;
+const ahorroPack = (u) => Math.max(0, Math.round((PRODUCTO.precio * u - precioPack(u)) * 100) / 100);
 const usuarioActual = () => estado.usuarios.find((u) => u.email === estado.sesion) || null;
 
 function escapar(t) {
@@ -91,38 +92,43 @@ function pintarEntrega() {
 
 // ---------- Ficha de producto ----------
 function aplicarColor(el, v) {
-  el.style.setProperty("--metal", v.metal);
+  el.style.setProperty("--tono", v.tono);
   el.style.setProperty("--brillo", v.brillo);
+  el.style.setProperty("--sombra", v.sombra);
 }
 
 function pintarProducto() {
   $("#nombre-producto").textContent = PRODUCTO.nombre;
   $("#subtitulo").textContent = PRODUCTO.subtitulo;
+  $("#incluye").textContent = PRODUCTO.incluye || "";
+  const minimoUd = Math.min(...PRODUCTO.packs.map((p) => precioPack(p.unidades) / p.unidades));
+  $("#precio-comparativa").textContent = `Desde ${euros(minimoUd)}`;
 
   const v = variante(estado.variante);
-  aplicarColor($("#lampara"), v);
+  aplicarColor($("#ilustracion"), v);
   $("#color-nombre").textContent = v.nombre;
   $("#colores").innerHTML = PRODUCTO.variantes
     .map(
       (x) =>
         `<button class="color ${x.id === v.id ? "activo" : ""}" data-color="${x.id}" ` +
-        `style="background:${x.metal}" aria-label="${escapar(x.nombre)}" aria-pressed="${x.id === v.id}"></button>`
+        `style="background:${x.tono}" aria-label="${escapar(x.nombre)}" aria-pressed="${x.id === v.id}"></button>`
     )
     .join("");
 
   $("#packs").innerHTML = packsDisponibles()
     .map((p) => {
       const total = precioPack(p.unidades);
-      const sinDto = PRODUCTO.precio * p.unidades;
+      const ahorro = ahorroPack(p.unidades);
+      const porUnidad = p.unidades > 1 ? ` · ${euros(total / p.unidades)}/ud` : "";
       const chip = p.unidades === 2 ? `<span class="chip">MÁS ELEGIDO</span>` : "";
       return `
       <button class="pack ${p.unidades === estado.unidades ? "activo" : ""}" data-pack="${p.unidades}">
         ${chip}
         <span class="radio"></span>
         <span><span class="titulo">${escapar(p.etiqueta)}</span>
-          ${p.nota ? `<span class="nota-pack">${escapar(p.nota)}</span>` : ""}</span>
+          ${p.nota || porUnidad ? `<span class="nota-pack">${escapar(p.nota || "")}${porUnidad}</span>` : ""}</span>
         <span class="p-precio">${euros(total)}
-          ${p.descuento ? `<small>Ahorras ${euros(sinDto - total)}</small>` : ""}</span>
+          ${ahorro ? `<small>Ahorras ${euros(ahorro)}</small>` : ""}</span>
       </button>`;
     })
     .join("");
@@ -131,15 +137,16 @@ function pintarProducto() {
   const p = pack(estado.unidades);
   $("#precio").textContent = euros(total);
   $("#barra-precio").textContent = euros(total);
-  $("#ahorro").classList.toggle("oculto", !p.descuento);
-  $("#ahorro").textContent = `−${Math.round(p.descuento * 100)} % por pack`;
+  const ahorro = ahorroPack(estado.unidades);
+  $("#ahorro").classList.toggle("oculto", !ahorro);
+  $("#ahorro").textContent = `Ahorras ${euros(ahorro)}`;
 }
 
 // Miniatura del producto con el color de la variante (para el carrito)
 function miniatura(idVariante) {
-  const svg = $("#lampara").cloneNode(true);
+  const svg = $("#ilustracion").cloneNode(true);
   svg.removeAttribute("id");
-  svg.querySelectorAll(".brillo-anim, .aroma").forEach((n) => n.classList.remove("brillo-anim", "aroma"));
+  svg.querySelectorAll(".anim").forEach((n) => n.classList.remove("anim"));
   aplicarColor(svg, variante(idVariante));
   return `<span class="mini">${svg.outerHTML}</span>`;
 }
@@ -172,8 +179,8 @@ const totalCarrito = () => estado.carrito.reduce((s, l) => s + importeLinea(l), 
 const descripcion = (l) => `${pack(l.unidades).etiqueta} · ${variante(l.variante).nombre}`;
 
 function pintarCarrito() {
-  const lamparas = estado.carrito.reduce((s, l) => s + l.unidades * l.cantidad, 0);
-  $("#contador").textContent = lamparas;
+  const unidadesTotales = estado.carrito.reduce((s, l) => s + l.unidades * l.cantidad, 0);
+  $("#contador").textContent = unidadesTotales;
   $("#total").textContent = euros(totalCarrito());
   $("#btn-checkout").disabled = !estado.carrito.length;
   $("#items-carrito").innerHTML = estado.carrito.length

@@ -5,33 +5,35 @@ Solo tienes que rellenar la configuración de `productos.js`. Sigue los pasos en
 
 ---
 
-## Paso 1 — Proveedor
+## Paso 1 — Proveedor del rizador sin calor
 
-No he encontrado un proveedor con almacén en España confirmado para este producto. Estas son las opciones reales que encontré, de mejor a peor para empezar en Navidad:
+Es un producto muy común, así que hay muchos proveedores. Lo importante es que **envíe desde Europa**: si sale desde China tarda 10–20 días y no llega a Navidad.
 
-| Opción | Qué es | Plazo a España | Ventaja | Pega |
-|---|---|---|---|---|
-| **A. Comprar stock pequeño a Flamingueo** (vía Faire) | Marca española que vende lámparas calientavelas con enchufe europeo. Tiene venta mayorista en Faire, con pedido mínimo de unos 90 £ | 1–3 días si envías tú | Llegas a Navidad sin problemas; producto ya probado (lo vende El Corte Inglés) | Es su marca: véndela como "Flamingueo" o pídeles marca blanca. Compites en precio con El Corte Inglés |
-| **B. CJdropshipping, almacén en Polonia** | Dropshipping: tú no tocas el producto | Aprox. 5–10 días (confírmalo en la ficha) | Sin stock ni inversión inicial | Más lento; revisa la calidad con una muestra |
-| **C. Syncee / Spocket** | Marketplaces con varias lámparas calientavelas | Depende del proveedor | Mucha variedad | No indican desde dónde envían: pregúntalo antes |
+| Opción | Qué es | Cómo encontrarlo |
+|---|---|---|
+| **A. CJdropshipping** (recomendada para empezar) | Dropshipping: tú no tocas el producto. Tiene almacenes en la UE | Busca "heatless curling rod" y filtra por **Ship from: Poland / Germany / Spain**. Pide 1–2 muestras |
+| **B. Qogita** (B2B, UE) | Mayorista europeo. Tiene un rizador sin calor de espuma y microfibra (marca COOLCURL) con código de barras polaco | qogita.com → busca "heatless curling rod" (necesitas registrarte como empresa) |
+| **C. Comprar 20–30 unidades** y enviarlas tú | Es ligero y barato: puedes tener stock en casa | AliExpress o Alibaba (proveedores con "Envío desde España"). Envías tú con Correos en 1–3 días |
 
-**Mi recomendación:** para esta Navidad, la **opción A** con 10–20 unidades. Las envías tú con Correos o SEUR y llegan en 1–3 días, lo que convierte mucho mejor en anuncios. Si se agotan rápido, pasa a la B, o pide marca blanca a un fabricante para el año que viene.
+**Mi recomendación:**
+- Pide **muestras de 2 proveedores** de la opción A y quédate con el de mejor satén y relleno.
+- Si los anuncios funcionan, compra stock (opción C), porque así envías en 24 h y ganas más por venta.
 
-Al proveedor que elijas, pídele siempre:
-- **marcado CE**;
-- **enchufe europeo**;
-- **instrucciones en español**;
-- **una muestra** antes de vender.
+Antes de vender, comprueba con la muestra:
+- que el relleno sea suave para dormir;
+- que el satén no se enganche;
+- que los coleteros aguanten;
+- que el producto que llega coincida con los textos de la web. Si algo no coincide (lo que incluye, los colores), cámbialo en `productos.js`.
 
-No pude abrir las webs de Faire ni de los proveedores desde aquí, así que **confirma precio, stock y plazos tú mismo** antes de pagar nada.
+No pude abrir las webs de los proveedores desde aquí, así que **confirma tú el precio, el stock y los plazos** antes de pagar.
 
 ## Paso 2 — Cobrar con Stripe (unos 30 minutos)
 
 1. Crea tu cuenta en **stripe.com/es** y verifica tu identidad y tu cuenta bancaria. Para facturar necesitarás estar dado de alta como autónomo.
 2. Ve a **Catálogo de productos → Añadir producto** y crea tres productos con el IVA incluido:
-   - "Lámpara calientavelas — 1 unidad": 39,90 €
-   - "Lámpara calientavelas — Pack 2": 67,83 €
-   - "Lámpara calientavelas — Pack 3": 89,78 €
+   - "Rizador sin calor — 1 unidad": 19,95 €
+   - "Rizador sin calor — Pack 2": 29,95 €
+   - "Rizador sin calor — Pack 3": 39,95 €
 3. Ve a **Payment Links → Nuevo** y crea un enlace por producto. En cada uno:
    - Activa **Recopilar direcciones de envío** (País: España).
    - Activa **Recopilar números de teléfono**, que el transportista los pide.
@@ -42,7 +44,7 @@ No pude abrir las webs de Faire ni de los proveedores desde aquí, así que **co
 En cuanto pegues el primer enlace, la web cambia sola a **modo venta**:
 - El botón pasa a ser **"Comprar ahora"** y lleva directamente al pago. Apple Pay y Google Pay funcionan sin configurar nada.
 - Se ocultan el carrito y la cuenta obligatoria, porque cada paso extra hace perder ventas. Stripe ya pide el email y envía el recibo.
-- El **color elegido** te llega en cada pago de Stripe en el campo *client_reference_id* (`negro`, `dorado` o `blanco`).
+- El **color elegido** te llega en cada pago de Stripe en el campo *client_reference_id* (`rosa`, `champan` o `negro`).
 - Los packs sin enlace no se muestran.
 
 ## Paso 3 — Píxel de Meta, para tus anuncios (unos 10 minutos)
@@ -60,7 +62,11 @@ El píxel solo se activa si el visitante pulsa **"Aceptar"** en el aviso de cook
 ## Paso 4 — Fotos reales
 
 Las fotos reales de tu muestra venden mucho más que la ilustración.
-1. Haz de 4 a 6 fotos: lámpara encendida de noche, plano de la cera fundida, sobre una mesita con una manta y detalle de los botones.
+1. Haz de 4 a 6 fotos:
+   - el rizador solo, sobre fondo claro;
+   - puesto en la cabeza;
+   - el pelo antes y después;
+   - el contenido de la caja con la bolsa de regalo.
 2. Súbelas a `tienda/img/` (formato .jpg, unos 1200 px de ancho).
 3. Escribe sus rutas en `productos.js` → `fotos`. La galería con miniaturas aparece sola.
 
@@ -72,7 +78,7 @@ Las fotos reales de tu muestra venden mucho más que la ilustración.
 
 ## Paso 6 — Publicar
 
-1. Activa GitHub Pages (instrucciones en la conversación) o compra un dominio propio (unos 10 €/año, por ejemplo `ambarcasa.es`). Un dominio propio da más confianza en los anuncios.
+1. Activa GitHub Pages (instrucciones en la conversación) o compra un dominio propio (unos 10 €/año, por ejemplo `sedalia.es`). Un dominio propio da más confianza en los anuncios.
 2. Haz una compra de prueba con el **modo de prueba de Stripe** (tarjeta `4242 4242 4242 4242`).
 3. Comprueba que llegas a la página de gracias y que el evento `Purchase` aparece en el Administrador de eventos.
 
@@ -83,13 +89,27 @@ Las fotos reales de tu muestra venden mucho más que la ilustración.
 3. Envía al cliente un email con el número de seguimiento.
 4. A los 7 días de la entrega, pide una reseña.
 
+## Números (estimación: confírmalos con tu proveedor)
+
+| | 1 rizador | Pack 2 | Pack 3 |
+|---|---|---|---|
+| Precio (IVA incluido) | 19,95 € | 29,95 € | 39,95 € |
+| Sin IVA (÷ 1,21) | 16,49 € | 24,75 € | 33,02 € |
+| Producto + envío (estimación) | −8 € | −12 € | −16 € |
+| Comisión de Stripe (~2 %) | −0,55 € | −0,70 € | −0,85 € |
+| **Margen antes de publicidad** | **≈ 8 €** | **≈ 12 €** | **≈ 16 €** |
+
+Al ser más barato que la lámpara, se vende más fácil, pero **cada venta deja menos**. Por eso el pack de 2 va preseleccionado: es lo que hace rentable el producto.
+
 ## Para tus anuncios
 
-- **Tu límite:** cada venta de una unidad deja unos 17 € antes de publicidad. Si una venta te cuesta más de 17 € en anuncios, pierdes dinero. El pack de 2 aguanta unos 25 €.
+- **Tu límite (CPA):** si cada venta te cuesta en anuncios más de **10–12 €**, pierdes dinero. Como referencia, el pack de 2 aguanta unos 12 €.
+- **Público:** mujeres de 18 a 45 años en España, con segmentación amplia. Más adelante, prueba también "regalos para mujer" con hombres de 25 a 55.
+- **El vídeo es lo que vende:** antes y después en la misma toma (pelo liso → se lo pone → al día siguiente, ondas).
+- **Ganchos para los primeros 2 segundos:**
+  - "Deja de quemarte el pelo con la plancha"
+  - "Me pongo esto antes de dormir y mira cómo me levanto"
+  - "El regalo de Navidad que todas me están pidiendo"
+  - "Ondas de peluquería por menos de 15 €"
 - **Enlaza los anuncios a la página principal**, que ya trae preseleccionado el pack de 2.
-- **Ganchos que suelen funcionar con este producto:**
-  - "Deja de encender velas";
-  - "El regalo que todos me piden";
-  - "Mi vela dura el triple";
-  - "Si tienes gato, necesitas esto".
-- **Fecha límite de Navidad:** la cuenta atrás de la barra superior acaba el **18 de diciembre**. Ajústala en `fechaLimiteNavidad` según los plazos reales de tu proveedor.
+- **Navidad:** la cuenta atrás de la barra superior acaba el **18 de diciembre**. Ajústala en `fechaLimiteNavidad` según los plazos reales de tu proveedor.
