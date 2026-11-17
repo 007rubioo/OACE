@@ -16,7 +16,11 @@ Tienda online para vender una **lámpara calientavelas**, hecha con HTML, CSS y 
 | `styles.css` | Diseño |
 | `productos.js` | **Configuración**: nombre, precio, colores, packs y fecha límite de Navidad |
 | `app.js` | Lógica: carrito, cuentas, pedidos |
-| `GUIA-LANZAMIENTO.md` | Plan paso a paso para empezar a vender |
+| `medicion.js` | Píxel de Meta y aviso de cookies |
+| `gracias.html` | Página tras el pago (registra la compra en el píxel) |
+| `legal.html` | Aviso legal, condiciones, envíos y devoluciones, privacidad y cookies |
+| `PASOS-PARA-VENDER.md` | **Empieza aquí**: proveedor, Stripe, píxel, fotos y datos legales |
+| `GUIA-LANZAMIENTO.md` | Estrategia: validación, números y calendario |
 
 ## Probarla
 
@@ -25,5 +29,6 @@ cd tienda
 python3 -m http.server 8000   # y abre http://localhost:8000
 ```
 
-Es una demo: los datos se guardan en el navegador y **no hay cobros reales**.
-Para vender de verdad, sigue el apartado 6 de la guía.
+Sin configurar, funciona como demo (carrito, cuentas y pedidos en el navegador, sin cobros).
+Al pegar los enlaces de pago de Stripe en `productos.js` pasa a **modo venta** con cobros reales:
+sigue `PASOS-PARA-VENDER.md`.

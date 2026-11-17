@@ -113,6 +113,7 @@
 
           <button id="btn-anadir" class="btn btn-grande">Añadir al carrito</button>
           <p class="entrega" id="entrega"></p>
+          <p class="pago-seguro oculto" id="pago-seguro">Pago seguro con tarjeta, Apple Pay o Google Pay a través de Stripe</p>
 
           <ul class="garantias">
             <li>✓ Pago 100 % seguro</li>
@@ -238,8 +239,24 @@
 
   <footer class="pie">
     <p class="marca">Ámbar <em>Casa</em></p>
-    <p>Envíos · Devoluciones · Aviso legal · Privacidad · Contacto</p>
+    <p class="pie-enlaces">
+      <a href="legal.html#envios">Envíos y devoluciones</a>
+      <a href="legal.html#condiciones">Condiciones de venta</a>
+      <a href="legal.html#aviso-legal">Aviso legal</a>
+      <a href="legal.html#privacidad">Privacidad</a>
+      <a href="legal.html#cookies">Cookies</a>
+      <a id="enlace-contacto" href="#">Contacto</a>
+    </p>
   </footer>
+
+  <!-- Aviso de cookies (solo aparece si hay píxel de Meta configurado) -->
+  <div id="cookies" class="cookies oculto" role="dialog" aria-label="Aviso de cookies">
+    <p>Usamos cookies de medición publicitaria (Meta) para mejorar nuestros anuncios. <a href="legal.html#cookies">Más información</a></p>
+    <div class="cookies-botones">
+      <button class="btn btn-sec-claro" id="cookies-no">Rechazar</button>
+      <button class="btn" id="cookies-si">Aceptar</button>
+    </div>
+  </div>
 
   <!-- Barra fija en móvil -->
   <div class="barra-movil" id="barra-movil">
@@ -265,6 +282,7 @@
   <div id="aviso" class="aviso" role="status"></div>
 
   <script src="productos.js"></script>
+  <script src="medicion.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

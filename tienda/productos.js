@@ -4,6 +4,36 @@ const TIENDA = {
   envioGratisDesde: 0, // 0 = envío gratis siempre
   // Último día para pedir y recibir antes de Navidad (ajústalo a los plazos reales de tu proveedor)
   fechaLimiteNavidad: "2026-12-18T23:59:59",
+
+  // ---- PAGOS REALES (Stripe Payment Links) ----
+  // Crea en Stripe un enlace de pago por pack y pégalo aquí. En cuanto haya
+  // al menos uno, la web pasa a "modo venta": el botón dice "Comprar ahora" y
+  // lleva directo al pago (sin carrito ni cuenta obligatoria). El color elegido
+  // llega a Stripe en el campo client_reference_id del pago.
+  enlacesPago: {
+    1: "", // p. ej. "https://buy.stripe.com/xxxxxxxx"
+    2: "",
+    3: "",
+  },
+
+  // ---- PÍXEL DE META (Facebook/Instagram Ads) ----
+  // Pega aquí el ID de tu píxel. Solo se carga si el visitante acepta las cookies.
+  metaPixelId: "",
+
+  // ---- FOTOS REALES ----
+  // Sube tus fotos a tienda/img/ y pon aquí sus rutas. Si está vacío se usa la ilustración.
+  fotos: [
+    // "img/lampara-1.jpg",
+    // "img/lampara-2.jpg",
+  ],
+
+  // ---- DATOS LEGALES (obligatorios por la LSSI) ----
+  empresa: {
+    titular: "[TU NOMBRE O RAZÓN SOCIAL]",
+    nif: "[NIF/CIF]",
+    direccion: "[DIRECCIÓN FISCAL COMPLETA]",
+    email: "[EMAIL DE CONTACTO]",
+  },
 };
 
 const PRODUCTO = {

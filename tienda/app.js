@@ -110,7 +110,7 @@ function pintarProducto() {
     )
     .join("");
 
-  $("#packs").innerHTML = PRODUCTO.packs
+  $("#packs").innerHTML = packsDisponibles()
     .map((p) => {
       const total = precioPack(p.unidades);
       const sinDto = PRODUCTO.precio * p.unidades;
@@ -156,6 +156,7 @@ function anadirAlCarrito() {
   else estado.carrito.push({ variante: estado.variante, unidades: estado.unidades, cantidad: 1 });
   guardarCarrito();
   abrirCarrito();
+  medir("AddToCart", datosEvento(estado.unidades));
 }
 
 function cambiarCantidad(i, delta) {
@@ -232,7 +233,7 @@ function actualizarBarraMovil() {
 function pintarCabecera() {
   const u = usuarioActual();
   $("#saludo").textContent = u ? `Hola, ${u.nombre.split(" ")[0]}` : "";
-  $("#btn-cuenta").classList.toggle("oculto", !!u);
+  $("#btn-cuenta").classList.toggle("oculto", !!u || modoVenta);
   $("#btn-pedidos").classList.toggle("oculto", !u);
   $("#btn-salir").classList.toggle("oculto", !u);
 }
@@ -320,6 +321,7 @@ function salir() {
 // ---------- Checkout ----------
 function irACheckout() {
   if (!estado.carrito.length) return;
+  medir("InitiateCheckout", { value: totalCarrito(), currency: "EUR" });
   if (!usuarioActual()) {
     destinoTrasLogin = "checkout";
     mostrar("cuenta");
@@ -387,12 +389,77 @@ function pintarPedidos() {
     : `<p class="vacio">Todavía no has hecho ningún pedido.</p>`;
 }
 
+// ---------- Modo venta (Stripe Payment Links) ----------
+const modoVenta = Object.values(TIENDA.enlacesPago || {}).some(Boolean);
+
+// En modo venta solo se muestran los packs que tienen enlace de pago
+function packsDisponibles() {
+  return modoVenta ? PRODUCTO.packs.filter((p) => TIENDA.enlacesPago[p.unidades]) : PRODUCTO.packs;
+}
+
+function datosEvento(unidades) {
+  return {
+    value: precioPack(unidades),
+    currency: "EUR",
+    content_ids: [PRODUCTO.id],
+    content_type: "product",
+    num_items: unidades,
+  };
+}
+
+function comprarAhora() {
+  const enlace = TIENDA.enlacesPago[estado.unidades];
+  if (!enlace) return avisar("Este pack no está disponible ahora mismo");
+  medir("InitiateCheckout", datosEvento(estado.unidades));
+  const url = new URL(enlace);
+  // El color elegido viaja a Stripe y aparece en el pago (client_reference_id)
+  url.searchParams.set("client_reference_id", estado.variante);
+  const boton = $("#btn-anadir");
+  boton.disabled = true;
+  boton.textContent = "Redirigiendo al pago seguro…";
+  // Pequeña espera para que el píxel registre el evento antes de salir
+  setTimeout(() => (location.href = url.toString()), 300);
+}
+
+function prepararModoVenta() {
+  if (!modoVenta) return;
+  const disponibles = packsDisponibles();
+  if (!disponibles.some((p) => p.unidades === estado.unidades)) estado.unidades = disponibles[0].unidades;
+  $("#btn-anadir").textContent = "Comprar ahora";
+  $("#pago-seguro").classList.remove("oculto");
+  // En modo venta Stripe gestiona el pago, el email y el recibo: sin carrito ni cuenta obligatoria
+  ["#btn-carrito", "#btn-cuenta", "#saludo"].forEach((s) => $(s).classList.add("oculto"));
+}
+
+// ---------- Fotos reales ----------
+function prepararFotos() {
+  const fotos = TIENDA.fotos || [];
+  if (!fotos.length) return;
+  const caja = $("#foto");
+  caja.classList.add("con-fotos");
+  const img = document.createElement("img");
+  img.src = fotos[0];
+  img.alt = PRODUCTO.nombre;
+  caja.appendChild(img);
+  if (fotos.length > 1) {
+    const miniaturas = document.createElement("div");
+    miniaturas.className = "miniaturas";
+    miniaturas.innerHTML = fotos
+      .map((f, i) => `<button class="${i ? "" : "activa"}" data-foto="${i}"><img src="${escapar(f)}" alt="Foto ${i + 1}"></button>`)
+      .join("");
+    caja.after(miniaturas);
+  }
+}
+
 // ---------- Eventos ----------
 document.addEventListener("click", (e) => {
   const t = e.target.closest("button, a");
   if (!t) return;
   const d = t.dataset;
-  if (d.color) {
+  if (d.foto) {
+    $("#foto img").src = TIENDA.fotos[Number(d.foto)];
+    document.querySelectorAll(".miniaturas button").forEach((b) => b.classList.toggle("activa", b === t));
+  } else if (d.color) {
     estado.variante = d.color;
     pintarProducto();
   } else if (d.pack) {
@@ -410,7 +477,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-$("#btn-anadir").addEventListener("click", anadirAlCarrito);
+$("#btn-anadir").addEventListener("click", () => (modoVenta ? comprarAhora() : anadirAlCarrito()));
 $("#btn-cuenta").addEventListener("click", () => {
   mostrar("cuenta");
   cambiarTab("registro");
@@ -428,8 +495,15 @@ document.addEventListener("keydown", (e) => e.key === "Escape" && cerrarCarrito(
 window.addEventListener("scroll", actualizarBarraMovil, { passive: true });
 
 // ---------- Inicio ----------
+const contacto = $("#enlace-contacto");
+if (TIENDA.empresa.email.includes("@")) contacto.href = "mailto:" + TIENDA.empresa.email;
+else contacto.href = "legal.html#aviso-legal";
+prepararFotos();
+prepararModoVenta();
 pintarProducto();
 pintarEntrega();
 pintarCabecera();
 pintarCarrito();
 mostrar("inicio");
+iniciarCookies();
+medir("ViewContent", datosEvento(estado.unidades));
