@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>¡Gracias por tu pedido! · Sedalia</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cab"><a href="./" class="marca">Seda<em>lia</em></a></header>
+  <main class="pagina-texto gracias">
+    <p class="icono-ok">✨</p>
+    <h1>¡Gracias por tu pedido!</h1>
+    <p>Hemos recibido tu pago. En unos minutos te llegará un email con el recibo.</p>
+    <p>Prepararemos tu pedido en 24–48 h y te enviaremos el número de seguimiento. La entrega suele tardar entre 3 y 6 días laborables.</p>
+    <p>¿Alguna duda? Escríbenos a <a id="email"></a>.</p>
+    <p><a class="btn" href="./">Volver a la tienda</a></p>
+  </main>
+  <div id="cookies" class="cookies oculto" role="dialog" aria-label="Aviso de cookies">
+    <p>Usamos cookies de medición publicitaria (Meta) para mejorar nuestros anuncios. <a href="legal.html#cookies">Más información</a></p>
+    <div class="cookies-botones">
+      <button class="btn btn-sec-claro" id="cookies-no">Rechazar</button>
+      <button class="btn" id="cookies-si">Aceptar</button>
+    </div>
+  </div>
+  <script src="productos.js"></script>
+  <script src="medicion.js"></script>
+  <script>
+    // Configura en cada Payment Link de Stripe la redirección tras el pago a:
+    //   https://TU-WEB/tienda/gracias.html?pack=1   (y ?pack=2, ?pack=3 en los otros enlaces)
+    const unidades = Number(new URLSearchParams(location.search).get("pack")) || 1;
+    const pack = PRODUCTO.packs.find((p) => p.unidades === unidades) || PRODUCTO.packs[0];
+    const valor = pack.precio ?? Math.round(PRODUCTO.precio * pack.unidades * 100) / 100;
+    const email = document.getElementById("email");
+    email.textContent = TIENDA.empresa.email;
+    email.href = "mailto:" + TIENDA.empresa.email;
+    // Evita contar dos veces la misma compra si recargan la página
+    let yaMedido = false;
+    try { yaMedido = sessionStorage.getItem("ambar_compra_medida") === location.search; } catch {}
+    if (!yaMedido) {
+      medir("Purchase", { value: valor, currency: "EUR", content_ids: [PRODUCTO.id], content_type: "product", num_items: pack.unidades });
+      try { sessionStorage.setItem("ambar_compra_medida", location.search); } catch {}
+    }
+    iniciarCookies();
+  </script>
+</body>
+</html>

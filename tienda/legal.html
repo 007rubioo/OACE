@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Información legal · Sedalia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    PLANTILLA: los datos entre corchetes se rellenan solos desde productos.js (TIENDA.empresa).
+    Revisa estos textos con un gestor o abogado antes de vender: dependen de tu situación.
+  -->
+  <header class="cab"><a href="./" class="marca">Seda<em>lia</em></a></header>
+
+  <main class="pagina-texto">
+    <h1>Información legal</h1>
+    <p class="indice">
+      <a href="#aviso-legal">Aviso legal</a>
+      <a href="#condiciones">Condiciones de venta</a>
+      <a href="#envios">Envíos y devoluciones</a>
+      <a href="#privacidad">Privacidad</a>
+      <a href="#cookies">Cookies</a>
+    </p>
+
+    <h2 id="aviso-legal">Aviso legal</h2>
+    <p>En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información (LSSI), se informa de que este sitio web pertenece a:</p>
+    <ul>
+      <li>Titular: <span class="dato" data-campo="titular"></span></li>
+      <li>NIF/CIF: <span class="dato" data-campo="nif"></span></li>
+      <li>Domicilio: <span class="dato" data-campo="direccion"></span></li>
+      <li>Email de contacto: <span class="dato" data-campo="email"></span></li>
+    </ul>
+    <p>El uso de esta web implica la aceptación de estas condiciones. Los contenidos (textos, imágenes y diseño) son propiedad del titular y no pueden reproducirse sin autorización.</p>
+
+    <h2 id="condiciones">Condiciones de venta</h2>
+    <ul>
+      <li><strong>Precios:</strong> todos los precios incluyen el IVA. El envío a España peninsular es gratuito.</li>
+      <li><strong>Pago:</strong> el pago se realiza a través de Stripe (tarjeta, Apple Pay, Google Pay). No almacenamos los datos de tu tarjeta.</li>
+      <li><strong>Confirmación:</strong> tras el pago recibirás un email con el recibo, que sirve como confirmación del contrato.</li>
+      <li><strong>Garantía:</strong> los productos tienen una garantía legal de 3 años por falta de conformidad (Real Decreto Legislativo 1/2007). Para usarla, escríbenos a <span class="dato" data-campo="email"></span>.</li>
+    </ul>
+
+    <h2 id="envios">Envíos y devoluciones</h2>
+    <ul>
+      <li><strong>Plazo de preparación:</strong> 24–48 horas laborables.</li>
+      <li><strong>Plazo de entrega:</strong> 3–6 días laborables en España peninsular. Te enviaremos el número de seguimiento por email.</li>
+      <li><strong>Derecho de desistimiento:</strong> la ley te da 14 días naturales desde la entrega; nosotros lo ampliamos a <strong>30 días</strong>. No necesitas dar ningún motivo.</li>
+      <li><strong>Cómo devolver:</strong> escríbenos a <span class="dato" data-campo="email"></span> indicando tu número de pedido. El producto debe devolverse en buen estado. Te reembolsaremos el importe completo, incluido el envío original, en un máximo de 14 días desde que recibamos el producto, por el mismo medio de pago.</li>
+      <li><strong>Gastos de devolución:</strong> [indica si los pagas tú o el cliente].</li>
+    </ul>
+    <p><strong>Modelo de formulario de desistimiento</strong> (solo si deseas usarlo): «A la atención de <span class="dato" data-campo="titular"></span>, <span class="dato" data-campo="direccion"></span>, <span class="dato" data-campo="email"></span>: Por la presente le comunico que desisto de mi contrato de venta del siguiente bien: [producto], pedido el [fecha] / recibido el [fecha]. Nombre, dirección, firma (solo en papel) y fecha.»</p>
+
+    <h2 id="privacidad">Política de privacidad</h2>
+    <ul>
+      <li><strong>Responsable:</strong> <span class="dato" data-campo="titular"></span> (<span class="dato" data-campo="nif"></span>), <span class="dato" data-campo="email"></span>.</li>
+      <li><strong>Qué datos tratamos:</strong> nombre, email, dirección de envío y teléfono que nos facilitas al comprar.</li>
+      <li><strong>Para qué:</strong> gestionar y enviar tu pedido, atender consultas y garantías y cumplir obligaciones fiscales.</li>
+      <li><strong>Base legal:</strong> la ejecución del contrato de compraventa y el cumplimiento de obligaciones legales. Las cookies publicitarias, solo con tu consentimiento.</li>
+      <li><strong>Destinatarios:</strong> Stripe (pagos), la empresa de transporte y el proveedor logístico, únicamente para entregar tu pedido. Meta, solo si aceptas las cookies publicitarias.</li>
+      <li><strong>Conservación:</strong> durante el tiempo necesario para la relación comercial y los plazos legales (en general, 6 años por obligaciones contables).</li>
+      <li><strong>Tus derechos:</strong> acceso, rectificación, supresión, oposición, limitación y portabilidad, escribiendo a <span class="dato" data-campo="email"></span>. Si no estás conforme, puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es).</li>
+    </ul>
+
+    <h2 id="cookies">Política de cookies</h2>
+    <ul>
+      <li><strong>Técnicas (no requieren consentimiento):</strong> esta web guarda en tu navegador tus preferencias y, en su caso, el carrito.</li>
+      <li><strong>Publicitarias (Meta Pixel):</strong> solo se activan si pulsas «Aceptar» en el aviso de cookies. Sirven para medir la eficacia de nuestros anuncios en Facebook e Instagram.</li>
+    </ul>
+    <p><button class="btn" id="cambiar-cookies">Cambiar mi elección de cookies</button></p>
+
+    <p><a href="./">← Volver a la tienda</a></p>
+  </main>
+
+  <script src="productos.js"></script>
+  <script>
+    document.querySelectorAll("[data-campo]").forEach((el) => {
+      el.textContent = TIENDA.empresa[el.dataset.campo] || "";
+    });
+    document.getElementById("cambiar-cookies").addEventListener("click", () => {
+      try { localStorage.removeItem("ambar_cookies"); } catch {}
+      alert("Listo. Se te volverá a preguntar al volver a la tienda.");
+    });
+  </script>
+</body>
+</html>

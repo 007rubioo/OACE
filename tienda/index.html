@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sedalia · Rizador sin calor</title>
+  <meta name="description" content="Rizador sin calor de satén: rizos y ondas mientras duermes, sin plancha y sin dañar tu pelo. Envío gratis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="anuncio">
+    <span>Envío gratis a toda España</span>
+    <span class="sep">·</span>
+    <span id="anuncio-navidad">Pide antes del 18 de diciembre y llega para Navidad</span>
+  </div>
+
+  <header class="cab">
+    <a href="#" class="marca" data-view="inicio">Seda<em>lia</em></a>
+    <nav class="cab-acciones">
+      <span id="saludo" class="saludo"></span>
+      <button id="btn-cuenta" class="enlace">Mi cuenta</button>
+      <button id="btn-pedidos" class="enlace oculto">Mis pedidos</button>
+      <button id="btn-salir" class="enlace oculto">Salir</button>
+      <button id="btn-carrito" class="btn-carrito" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span id="contador" class="burbuja">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== Página de producto ===== -->
+    <div id="vista-inicio" class="vista">
+      <section class="hero">
+        <div class="galeria">
+          <div class="foto" id="foto">
+            <svg id="ilustracion" viewBox="0 0 400 420" role="img" aria-label="Rizador sin calor de satén con dos coleteros">
+              <defs>
+                <radialGradient id="halo" cx="50%" cy="45%" r="60%">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+                  <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <circle cx="200" cy="200" r="185" fill="url(#halo)"/>
+              <!-- mechones con ondas -->
+              <g fill="none" stroke-linecap="round" class="pelo">
+                <path d="M150 250 q-22 22 0 44 q22 22 0 44 q-22 22 0 40" stroke-width="13"/>
+                <path d="M118 245 q-20 22 0 44 q20 22 0 44 q-20 20 -4 36" stroke-width="11" opacity=".8"/>
+                <path d="M250 250 q22 22 0 44 q-22 22 0 44 q22 22 0 40" stroke-width="13"/>
+                <path d="M282 245 q20 22 0 44 q-20 22 0 44 q20 20 4 36" stroke-width="11" opacity=".8"/>
+              </g>
+              <!-- barra de satén -->
+              <path d="M96 285 C 96 70, 304 70, 304 285" stroke-width="54" stroke-linecap="round" fill="none" class="tono-trazo"/>
+              <path d="M96 285 C 96 70, 304 70, 304 285" stroke-width="54" stroke-linecap="round" fill="none" class="sombra-trazo" opacity=".35" stroke-dasharray="2 22"/>
+              <path d="M84 270 C 86 92, 296 76, 300 210" stroke-width="12" stroke-linecap="round" fill="none" class="brillo-trazo" opacity=".85"/>
+              <!-- coleteros -->
+              <g transform="translate(96 300)">
+                <circle r="38" class="sombra-relleno"/>
+                <circle r="38" fill="none" stroke-width="16" stroke-dasharray="9 7" class="tono-trazo"/>
+                <circle r="14" class="fondo-relleno"/>
+              </g>
+              <g transform="translate(304 300)">
+                <circle r="38" class="sombra-relleno"/>
+                <circle r="38" fill="none" stroke-width="16" stroke-dasharray="9 7" class="tono-trazo"/>
+                <circle r="14" class="fondo-relleno"/>
+              </g>
+              <!-- destellos -->
+              <g class="anim destellos" fill="#ffffff">
+                <path d="M200 40 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5 l14 -5 Z"/>
+                <path d="M330 110 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z"/>
+                <path d="M70 130 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3 l9 -3 Z"/>
+              </g>
+            </svg>
+          </div>
+          <ul class="sellos">
+            <li><strong>0 °C</strong><span>Nada de calor ni daño</span></li>
+            <li><strong>2 min</strong><span>Para colocártelo</span></li>
+            <li><strong>Toda la noche</strong><span>Rizos al despertar</span></li>
+          </ul>
+        </div>
+
+        <div class="compra">
+          <p class="eyebrow">El regalo viral de este invierno</p>
+          <h1 id="nombre-producto">Rizador sin calor Sedalia</h1>
+          <p class="sub" id="subtitulo"></p>
+
+          <div class="precio-fila">
+            <span class="precio" id="precio"></span>
+            <span class="ahorro oculto" id="ahorro"></span>
+          </div>
+          <p class="iva">IVA incluido · Envío gratis</p>
+
+          <fieldset class="opcion">
+            <legend>Color: <strong id="color-nombre"></strong></legend>
+            <div class="colores" id="colores"></div>
+          </fieldset>
+
+          <fieldset class="opcion">
+            <legend>Elige tu pack</legend>
+            <div class="packs" id="packs"></div>
+          </fieldset>
+
+          <button id="btn-anadir" class="btn btn-grande">Añadir al carrito</button>
+          <p class="entrega" id="entrega"></p>
+          <p class="pago-seguro oculto" id="pago-seguro">Pago seguro con tarjeta, Apple Pay o Google Pay a través de Stripe</p>
+
+          <ul class="garantias">
+            <li>✓ Pago 100 % seguro</li>
+            <li>✓ 30 días para devolverlo</li>
+            <li>✓ Envío en bolsa de regalo</li>
+          </ul>
+
+          <details class="acordeon" open>
+            <summary>Qué incluye</summary>
+            <p id="incluye"></p>
+          </details>
+          <details class="acordeon">
+            <summary>Cómo funciona</summary>
+            <p>Enrollas mechones de pelo alrededor de la barra de satén y los sujetas con los coleteros. Mientras duermes, el pelo toma la forma de la barra. Por la mañana lo sueltas y tienes ondas definidas, sin haber usado nada de calor.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bloque beneficios">
+        <h2>Pelo de peluquería, sin quemarlo</h2>
+        <div class="tarjetas">
+          <article><span class="icono">💆‍♀️</span><h3>Pelo más sano</h3><p>Sin plancha ni tenacillas: tu pelo no se quema, no se abre y se encrespa menos.</p></article>
+          <article><span class="icono">⏰</span><h3>Mañanas sin prisas</h3><p>Te lo pones por la noche en 2 minutos y te levantas peinada. Cero minutos de plancha.</p></article>
+          <article><span class="icono">🌙</span><h3>Cómodo para dormir</h3><p>Relleno suave y satén que no tira del pelo ni deja marcas.</p></article>
+          <article><span class="icono">🎁</span><h3>El regalo que triunfa</h3><p>Llega en bolsa de regalo. Un detalle útil que se usa todas las semanas.</p></article>
+        </div>
+      </section>
+
+      <section class="bloque comparativa">
+        <h2>Plancha o tenacillas vs. Sedalia</h2>
+        <table>
+          <thead><tr><th></th><th>Con calor</th><th class="destacado">Sedalia</th></tr></thead>
+          <tbody>
+            <tr><td>Daña el pelo</td><td>Sí</td><td class="destacado">No</td></tr>
+            <tr><td>Tiempo por la mañana</td><td>15–30 min</td><td class="destacado">0 min</td></tr>
+            <tr><td>Se puede usar a diario</td><td>Mejor no</td><td class="destacado">Sí</td></tr>
+            <tr><td>Funciona mientras duermes</td><td>No</td><td class="destacado">Sí</td></tr>
+            <tr><td>Precio</td><td>30–80 €</td><td class="destacado" id="precio-comparativa"></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bloque pasos">
+        <h2>Así de fácil</h2>
+        <ol>
+          <li><span>1</span><p>Con el pelo seco o un poco húmedo, coloca la barra sobre la cabeza.</p></li>
+          <li><span>2</span><p>Enrolla los mechones alrededor y sujeta las puntas con los coleteros.</p></li>
+          <li><span>3</span><p>Duerme tranquila. Por la mañana suéltalo: ondas listas.</p></li>
+        </ol>
+      </section>
+
+      <section class="bloque faq">
+        <h2>Preguntas frecuentes</h2>
+        <details class="acordeon"><summary>¿Funciona con mi tipo de pelo?</summary><p>Funciona mejor con melena media o larga, a partir de los hombros. Sirve para pelo liso, ondulado y grueso.</p></details>
+        <details class="acordeon"><summary>¿Cuánto duran los rizos?</summary><p>Normalmente todo el día. Con un poco de espuma o laca al soltarlo duran más.</p></details>
+        <details class="acordeon"><summary>¿Lo pongo con el pelo mojado?</summary><p>Mejor seco o ligeramente húmedo. Si está empapado no se secará en toda la noche.</p></details>
+        <details class="acordeon"><summary>¿Cuánto tarda el envío?</summary><p>Entre 3 y 6 días laborables a la península. Recibirás el número de seguimiento por correo.</p></details>
+        <details class="acordeon"><summary>¿Y si no me convence?</summary><p>Tienes 30 días para devolverlo y te reembolsamos el importe completo.</p></details>
+      </section>
+
+      <section class="cta-final">
+        <h2>Despierta con el pelo hecho</h2>
+        <p>Envío gratis y 30 días para probarlo sin compromiso.</p>
+        <button class="btn btn-grande" data-subir>Quiero el mío</button>
+      </section>
+    </div>
+
+    <!-- ===== Cuenta ===== -->
+    <section id="vista-cuenta" class="vista oculto">
+      <div class="tarjeta-form">
+        <div class="tabs">
+          <button class="tab activa" data-tab="login">Iniciar sesión</button>
+          <button class="tab" data-tab="registro">Crear cuenta</button>
+        </div>
+        <form id="form-login" class="form" novalidate>
+          <label>Correo electrónico <input name="email" type="email" required autocomplete="email"></label>
+          <label>Contraseña <input name="password" type="password" required autocomplete="current-password"></label>
+          <p class="error" data-error></p>
+          <button class="btn" type="submit">Entrar</button>
+        </form>
+        <form id="form-registro" class="form oculto" novalidate>
+          <label>Nombre completo <input name="nombre" required autocomplete="name"></label>
+          <label>Correo electrónico <input name="email" type="email" required autocomplete="email"></label>
+          <label>Contraseña <small>mín. 8 caracteres, una letra y un número</small>
+            <input name="password" type="password" required autocomplete="new-password"></label>
+          <label>Repetir contraseña <input name="password2" type="password" required autocomplete="new-password"></label>
+          <label>Dirección de envío <input name="direccion" required autocomplete="street-address"></label>
+          <label class="check"><input name="terminos" type="checkbox"> Acepto los términos y la política de privacidad</label>
+          <p class="error" data-error></p>
+          <button class="btn" type="submit">Crear cuenta</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Checkout ===== -->
+    <section id="vista-checkout" class="vista oculto">
+      <div class="tarjeta-form">
+        <h2>Finalizar compra</h2>
+        <div id="resumen-checkout"></div>
+        <form id="form-checkout" class="form" novalidate>
+          <label>Dirección de envío <input name="direccion" required></label>
+          <label>Método de pago
+            <select name="pago">
+              <option value="Tarjeta">Tarjeta</option>
+              <option value="Bizum">Bizum</option>
+              <option value="PayPal">PayPal</option>
+            </select>
+          </label>
+          <p class="error" data-error></p>
+          <button class="btn" type="submit">Confirmar pedido</button>
+          <p class="nota">Demo: no se realiza ningún cobro real.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== Pedidos ===== -->
+    <section id="vista-pedidos" class="vista oculto">
+      <div class="contenedor-estrecho">
+        <h2>Mis pedidos</h2>
+        <div id="lista-pedidos"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p class="marca">Seda<em>lia</em></p>
+    <p class="pie-enlaces">
+      <a href="legal.html#envios">Envíos y devoluciones</a>
+      <a href="legal.html#condiciones">Condiciones de venta</a>
+      <a href="legal.html#aviso-legal">Aviso legal</a>
+      <a href="legal.html#privacidad">Privacidad</a>
+      <a href="legal.html#cookies">Cookies</a>
+      <a id="enlace-contacto" href="#">Contacto</a>
+    </p>
+  </footer>
+
+  <!-- Aviso de cookies (solo aparece si hay píxel de Meta configurado) -->
+  <div id="cookies" class="cookies oculto" role="dialog" aria-label="Aviso de cookies">
+    <p>Usamos cookies de medición publicitaria (Meta) para mejorar nuestros anuncios. <a href="legal.html#cookies">Más información</a></p>
+    <div class="cookies-botones">
+      <button class="btn btn-sec-claro" id="cookies-no">Rechazar</button>
+      <button class="btn" id="cookies-si">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- Barra fija en móvil -->
+  <div class="barra-movil" id="barra-movil">
+    <span id="barra-precio"></span>
+    <button class="btn" data-subir>Comprar ahora</button>
+  </div>
+
+  <!-- Carrito -->
+  <aside id="carrito" class="carrito" aria-hidden="true">
+    <div class="carrito-cab">
+      <h2>Tu carrito</h2>
+      <button id="cerrar-carrito" class="btn-icono" aria-label="Cerrar">×</button>
+    </div>
+    <div class="envio-gratis">🚚 Tienes <strong>envío gratis</strong></div>
+    <ul id="items-carrito" class="items"></ul>
+    <div class="carrito-pie">
+      <p class="total"><span>Total</span><strong id="total">0,00 €</strong></p>
+      <button id="btn-checkout" class="btn">Tramitar pedido</button>
+      <p class="nota">Pago seguro · 30 días de devolución</p>
+    </div>
+  </aside>
+  <div id="velo" class="velo oculto"></div>
+  <div id="aviso" class="aviso" role="status"></div>
+
+  <script src="productos.js"></script>
+  <script src="medicion.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
